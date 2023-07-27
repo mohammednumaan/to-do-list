@@ -1,8 +1,33 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 2fr, 4fr;
+}
 .header-container{
+
+
 
     max-height: 100px;
     background-color:#272932;
     color: #3f7cac;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-container{
+
+    grid-column: 1/2;
+    background-color: #3f7cac;
+    color: #272932;
+
+
 }
 
 .inactive{
