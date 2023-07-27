@@ -1,8 +1,8 @@
-.main-screen-container{
+.header-container{
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    max-height: 100px;
+    background-color:#272932;
+    color: #3f7cac;
 }
 
 .inactive{

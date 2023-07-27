@@ -47,8 +47,8 @@ function createProjectDiv(){
         newProjectArray.push(newProject)
         
         form.reset()
-        form.classList.add('inactive')
-        
+        form.style.display = 'none'
+
         projectName.innerHTML = newProject.name
     }
 
