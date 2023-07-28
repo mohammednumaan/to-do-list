@@ -3,14 +3,21 @@ body{
     padding: 0;
 }
 
+.blur{
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
 .container{
     display: grid;
-    grid-template-columns: 2fr, 4fr;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 100px 300px 345px;
 }
-.header-container{
 
+.header{
 
-
+    grid-column: 1/3;
+    grid-row:1/2;
     max-height: 100px;
     background-color:#272932;
     color: #3f7cac;
@@ -21,15 +28,187 @@ body{
     align-items: center;
 }
 
-.sidebar-container{
+.sidebar{
 
-    grid-column: 1/2;
+    grid-row: 2/4;
     background-color: #3f7cac;
     color: #272932;
+    font-size: 15px;
+
+}
+
+
+.sidebar-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: center;
+    padding-top: 10px;
+    gap: 20px;
+}
+
+
+.add-project{
+
+    margin-left: 0px;
+    font-family: sans-serif;
+    font-weight: 800;
+    color: #3f7cac;
+    background-color: #272932;
+    border: 2px solid lightgray;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.project-title{
+    margin: 0;
+    margin-left: -15px;
+    font-family: sans-serif;
+    font-weight: 800;
+    color: white;
+    
+}
+
+.project-title-hover:hover{
+
+    border: 2px solid #272932;
+    border-radius: 10px;
+
+    
+    background-color: lightsalmon;
+}
+
+.project-name{
+
+    margin: 0;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: auto;
+    font-family: sans-serif;
+    font-weight: 800;
+    color: #3f7cac;
+}
+
+.new-div{
+    margin: 0;
+    margin-left: 1100px;
+    margin-top: -30px;
+    width: auto;
+    position: relative;
 
 
 }
 
+.project-form{
+
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+
+    border: 2px solid #272932;
+    border-radius: 10px;
+    width: 200px;
+    margin-left: 500px;
+    margin-top: 250px;
+}
+
+.todo-form{
+
+    border: 7px solid #272932;
+    background-color: #3f7cac;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+    height: 400px;
+    padding: 10px;
+    margin-left: 290px;
+    margin-top: 20px;
+    border-radius: 20px;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 800;
+}
+
+hr{
+    margin-top: 20px;
+    border: 2px solid #272932;
+    width: 250px;
+
+
+}
 .inactive{
     display: none;
+
 }
+
+
+.task-div{
+
+    margin-top: 40px;
+    margin-left: 100px;
+    margin-bottom: 7px;
+    border: 5px solid #272932;
+    border-radius: 20px;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 4px;
+    width: 1000px;
+    height: 60px;
+    background-color: #3f7cac;
+    color: #272932;
+    font-family: sans-serif;
+}
+
+.task-div > h2 {
+
+    margin-right: 13px;
+}
+.task-div > ul{
+
+    margin: 0;
+}
+.task-div > p{
+
+    margin-top: 25px;
+}
+
+.line {
+
+    background-color: lightsalmon;
+    text-decoration: line-through;
+}
+
+.delete-button{
+
+    border: 2px solid #272932;
+    background-color: #db3a34;
+    color: white;
+
+}
+
+.button-add{
+
+    background-color: #3f7cac;
+    border: 2px solid #272932;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 800;
+}   
+
+.add{
+
+    background-color: #272932;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 800;
+}
+

@@ -10,8 +10,8 @@ class Project{
     }
 
     removeTask(task){
-        let index = this.todos.indexOf(task)
-        this.todos.splice(index, 1)
+
+        this.todos = this.todos.filter((todo) => todo.title !== task);
     }
 }
 
