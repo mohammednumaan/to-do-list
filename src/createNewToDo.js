@@ -1,3 +1,5 @@
+// creates todo object
+
 class Todo{
     constructor(title, desc, date, priority,project){
         this.title = title
@@ -5,7 +7,6 @@ class Todo{
         this.date = date
         this.priority = priority
         this.project = project
-
     }
 }
 

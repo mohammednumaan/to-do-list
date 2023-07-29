@@ -100,6 +100,7 @@ function DOM(){
         newTaskButton.addEventListener('click', () => {
             createToDoDiv()
         })
+
         projectDiv.style.display = 'none'
 
 
@@ -132,7 +133,7 @@ function DOM(){
             todoForm.classList.add('todo-form')
     
     
-            const taskTitle = document.createElement('input')
+            let taskTitle = document.createElement('input')
             taskTitle.setAttribute('type', 'text')
             taskTitle.setAttribute('id', 'new-task')
             
@@ -143,7 +144,7 @@ function DOM(){
             taskTitleLabel.textContent = 'Title Of Your Task'
     
         
-            const taskDesc = document.createElement('textarea')
+            let taskDesc = document.createElement('textarea')
             taskTitle.setAttribute('id', 'new-desc')
             taskTitle.required = true;
     
@@ -152,7 +153,7 @@ function DOM(){
             taskDescLabel.textContent = 'Description Of Your Task'
     
     
-            const taskDate = document.createElement('input')
+            let taskDate = document.createElement('input')
             taskDate.setAttribute('type', 'date')
             taskDate.setAttribute('id', 'task-date')
             taskTitle.required = true;
@@ -162,7 +163,7 @@ function DOM(){
             taskDateLabel.setAttribute('for', 'task-date')
     
     
-            const taskPrior = document.createElement('select')
+            let taskPrior = document.createElement('select')
             taskPrior.setAttribute('id', 'priority')
             taskTitle.required = true;
     
@@ -243,15 +244,15 @@ function DOM(){
                 taskLI.appendChild(tasks)
     
                 const taskDescr = document.createElement('p')
-                taskDescr.textContent = `Description : ${newTodo.desc}`
+                taskDescr.textContent = `${newTodo.desc}`
                 taskDivs.appendChild(taskDescr)
     
                 const taskDates = document.createElement('p')
-                taskDates.textContent = `Due-Date : ${newTodo.date}`
+                taskDates.textContent = `${newTodo.date}`
                 taskDivs.appendChild(taskDates)
     
                 const taskPriority = document.createElement('p')
-                taskPriority.textContent = `Priority : ${newTodo.priority}`
+                taskPriority.textContent = `${newTodo.priority}`
                 taskDivs.appendChild(taskPriority)
 
                 const deleteTask = document.createElement('button')
@@ -264,10 +265,11 @@ function DOM(){
                 editTask.setAttribute('type', 'button')
                 editTask.classList.add('edit-button')
                 editTask.textContent = 'Edit This Task'
+                editTask.classList.add('edit-task-button')
                 taskDivs.appendChild(editTask)
     
                 projectDiv.appendChild(taskDivs)    
-                
+
 
                 // delete todo logic
 
@@ -277,24 +279,99 @@ function DOM(){
                     console.log(newProjectArray)
                 })
 
-                // edit todo logic
-
-                editTask.addEventListener('click', (e) =>{
-                    let target = e.target.parentElement
-                    let currentDiv = target
-                    document.querySelector('#new-task').value = currentDiv.children[0].textContent
-
+                // edit todo form
+                
+                editTask.addEventListener('click', (event) => {
+                    let target = event.target.parentElement
+                    editT()
                 })
 
+                function editT() {
 
-                // todo toggle complete logic
+                    taskDivs.innerHTML = ''
 
-                //taskDivs.addEventListener('click', () => {
-                    //taskDivs.classList.toggle('line')
-                //})
-            }
-        }
-    }
-}
+                    let editForm = document.createElement('form')
+                    editForm.classList.add('edit-form')
+                    taskDivs.appendChild(editForm)
+
+                    let editTitle = document.createElement('input')
+                    editTitle.setAttribute('type', 'text')
+                    editTitle.value = tasks.textContent
+                    editForm.appendChild(editTitle)
+
+
+                    let editDesc = document.createElement('textarea')
+                    editDesc.textContentL = taskDescr.textContent
+                    editForm.appendChild(editDesc)
+
+                    let editDate = document.createElement('input')
+                    editDate.setAttribute('type', 'date')
+                    editDate.value = taskDates.textContent
+                    editForm.appendChild(editDate)
+
+                    let editPriority = document.createElement('select')
+
+                    let lowPrior = document.createElement('option')
+                    lowPrior.setAttribute('name', 'Low')
+                    lowPrior.textContent = 'Low'
+                    editPriority.appendChild(lowPrior)
+            
+            
+                    let mediumPrior = document.createElement('option')
+                    mediumPrior.setAttribute('name', 'Medium')
+                    mediumPrior.textContent = 'Medium'
+                    editPriority.appendChild(mediumPrior)
+            
+            
+                    let highPrior= document.createElement('option')
+                    highPrior.setAttribute('name', 'High Priority')
+                    highPrior.textContent = 'High'
+                    editPriority.appendChild(highPrior)
+
+                    editPriority.value = taskPriority.textContent
+                    editForm.appendChild(editPriority)
+
+                    let editButton = document.createElement('button')
+                    editButton.textContent = 'Update Task'
+                    editButton.type = 'button'
+                    editForm.appendChild(editButton)
+
+                    // edit task logic 
+
+                    editButton.addEventListener('click', () => {
+                        editForm.style.display = 'none'
+
+                        tasks.textContent = editTitle.value
+                        taskLI.appendChild(tasks)
+                        taskUL.appendChild(taskLI)
+                        taskDivs.appendChild(taskUL)
+
+                        taskDescr.textContent = editDesc.value
+                        taskDivs.appendChild(taskDescr)
+
+                        taskDates.textContent = editDate.value
+                        taskDivs.appendChild(taskDates)
+
+                        taskPriority.textContent = editPriority.value
+                        taskDivs.appendChild(taskPriority)
+
+                        taskDivs.appendChild(deleteTask)
+                        taskDivs.appendChild(editTask)
+
+                        // updates the array
+
+                        let updatedTodo = new Todo(editTitle.value, editDesc.value, editDate.value, editPriority.value,newTodo.project)
+                        let currentTodo = newTodo
+                        let index = newProject.todos.indexOf(currentTodo)
+                        newProject.todos.splice(index, 1, updatedTodo)
+                        console.log(newProjectArray)
+                    });
+                };
+            };
+        };
+    };
+};
+
+
 export {DOM}
 
