@@ -127,6 +127,7 @@ function DOM(){
     
             const todoForm = document.createElement('form')
             todoForm.classList.add('todo-form')
+            todoq.classList.add('display')
     
     
             let taskTitle = document.createElement('input')
@@ -201,14 +202,14 @@ function DOM(){
             todoForm.appendChild(taskPrior)
             todoForm.appendChild(addTaskButton)
     
-            mainContainer.appendChild(todoForm)
+            container.appendChild(todoForm)
             
             // display todo event
 
             addTaskButton.addEventListener('click', () => {
                 displayTodo()
                 todoForm.reset()
-                mainContainer.removeChild(todoForm)
+                todoForm.style.display ='none'
             })
             
 
