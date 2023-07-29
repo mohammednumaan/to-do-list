@@ -218,7 +218,7 @@ function displayProject(){
             // delete button
 
             deleteTask.addEventListener('click', (event) => {
-                deleteTasks(event, newProject, projectDiv)
+                deleteTasks(event, newProject, projectDiv,newTodo)
             })
 
             // edit button
