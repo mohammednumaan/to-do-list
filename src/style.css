@@ -171,11 +171,6 @@ hr{
 
 }
 
-.displayy{
-
-    position: fixed;
-}
-
 
 .task-div{
 
@@ -236,6 +231,16 @@ hr{
 
 }
 
+.complete-button{
+    border: 2px solid #272932;
+    border-radius: 7px;
+    background-color: green;
+    font-family: sans-serif;
+    font-weight: 800;
+    color: white;
+
+}
+
 .edit-form{
 
     display: flex;
@@ -258,8 +263,8 @@ hr{
 
     border: 2px solid #272932;
     border-radius: 7px;
-    background-color: green;
-    color: white;
+    background-color: yellow;
+    color: black;
     font-family: sans-serif;
     font-weight: 800;
 }

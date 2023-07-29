@@ -1,8 +1,11 @@
 // import 
-
 import { defaultProject ,newProjectArray } from "./createNewProject"
 import { mainContainer, sidebarContainer } from "./DOM"
 import { Todo } from "./createNewToDo";
+import { deleteTasks } from "./deleteTasks";
+import { editFunctionality } from "./editTasks";
+import { switchTabs } from "./switchTabs";
+import { completeTasks } from "./completeTasks";
 
 // creates default
 
@@ -48,31 +51,16 @@ function displayProject(){
     projectName.innerHTML = newProject.name
     projectTitle.innerText = newProject.name
     newTaskButton.textContent = 'ADD TASK +'
-    
-
     projectDiv.id = projectTitle.textContent
-
-    newTaskButton.addEventListener('click', () => {
-        createToDoDiv()
-    })
-
     projectDiv.style.display = 'none'
 
+    newTaskButton.addEventListener('click', createToDoDiv)
 
-    // switch tabs logic
+    // switch tabs event
 
     projectName.addEventListener('click', () => {
-
-        let projectDivs = Array.from(document.querySelectorAll('.project-div'))
-        for (let i = 0; i < projectDivs.length; i++){
-            if (projectDivs[i].id == projectTitle.textContent){
-                projectDivs[i].style.display = 'block'                    
-            }
-            else{
-                projectDivs[i].style.display = 'none'
-            }
-        }
-    });
+        switchTabs(projectDiv, projectTitle)
+    })
 
     
     // creates project todos
@@ -204,42 +192,50 @@ function displayProject(){
             taskDivs.appendChild(taskPriority)
 
             const deleteTask = document.createElement('button')
+            deleteTask.disabled = false;
             deleteTask.setAttribute('type', 'button')
             deleteTask.classList.add('delete-button')
             deleteTask.textContent = 'Delete This Task'
             taskDivs.appendChild(deleteTask)
 
             const editTask = document.createElement('button')
+            editTask.disabled = false;
             editTask.setAttribute('type', 'button')
             editTask.classList.add('edit-button')
             editTask.textContent = 'Edit This Task'
             editTask.classList.add('edit-task-button')
             taskDivs.appendChild(editTask)
 
+            const completeTask = document.createElement('button')
+            completeTask.setAttribute('type', 'button')
+            completeTask.classList.add('complete-button')
+            completeTask.textContent = 'Completed!'
+            taskDivs.appendChild(completeTask)
+
             projectDiv.appendChild(taskDivs)    
 
 
-            // delete todo logic
+            // delete button
 
             deleteTask.addEventListener('click', (event) => {
-                newProject.removeTask(newTodo.title)
-                projectDiv.removeChild(event.target.parentElement)
-                console.log(newProjectArray)
+                deleteTasks(event)
             })
 
-            // toggle complete
-            taskDivs.addEventListener('click' , () => {
-                taskDivs.classList.toggle('line')
-            })
-
-            // edit todo form
+            // edit button
             
             editTask.addEventListener('click', (event) => {
                 let target = event.target.parentElement
-                editTasks()
+                editTaskForm()
             })
 
-            function editTasks() {
+            // complete button
+            completeTask.addEventListener('click' , () => {
+                completeTasks(tasks, taskDescr, taskDates, taskPriority)
+            })
+
+
+
+            function editTaskForm() {
 
                 taskDivs.innerHTML = ''
 
@@ -322,8 +318,7 @@ function displayProject(){
                 editForm.appendChild(editButton)
 
 
-                // edit task logic 
-
+                // update button
                 editButton.addEventListener('click', () => {
                     editForm.style.display = 'none'
 
@@ -331,28 +326,22 @@ function displayProject(){
                     taskLI.appendChild(tasks)
                     taskUL.appendChild(taskLI)
                     taskDivs.appendChild(taskUL)
-
+                    
                     taskDescr.textContent = editDesc.value
                     taskDivs.appendChild(taskDescr)
-
+                    
                     taskDates.textContent = editDate.value
                     taskDivs.appendChild(taskDates)
-
-                    taskPriority.textContent = editPriority.value
+                    
+                    taskPriority.textContent = editPriority.value   
                     taskDivs.appendChild(taskPriority)
-
+                    
                     taskDivs.appendChild(deleteTask)
                     taskDivs.appendChild(editTask)
+                    taskDivs.appendChild(completeTask)
 
-
-                    // updates the array
-
-                    let updatedTodo = new Todo(editTitle.value, editDesc.value, editDate.value, editPriority.value,newTodo.project)
-                    let currentTodo = newTodo
-                    let index = newProject.todos.indexOf(currentTodo)
-                    newProject.todos.splice(index, 1, updatedTodo)
-                    console.log(newProjectArray)
-                });
+                    editFunctionality(editTitle, editDesc, editDate, editPriority, newTodo, newProject) 
+                })
 
             };
         };
