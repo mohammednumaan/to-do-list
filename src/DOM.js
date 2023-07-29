@@ -256,7 +256,7 @@ function DOM(){
                 // delete button
 
                 deleteTask.addEventListener('click', (event) => {
-                    deleteTasks(event)
+                    deleteTasks(event, newProject, projectDiv)
 
                 })
 
