@@ -59,7 +59,6 @@ function DOM(){
 
     // displays project div
 
-
     function displayProject(){
 
         // creates project-to-do display/divs
@@ -118,15 +117,12 @@ function DOM(){
                 }
             }
         });
+
         
-
-
         // creates project todos
-
     
         function createToDoDiv(){
     
-
             // creates todo form
     
             const todoForm = document.createElement('form')
@@ -177,12 +173,10 @@ function DOM(){
             low.textContent = 'Low'
             taskPrior.appendChild(low)
     
-    
             const medium = document.createElement('option')
             medium.setAttribute('name', 'Medium Priority')
             medium.textContent = 'Medium'
             taskPrior.appendChild(medium)
-    
     
             const high= document.createElement('option')
             high.setAttribute('name', 'High Priority')
@@ -193,7 +187,6 @@ function DOM(){
             addTaskButton.setAttribute('type', 'button')
             addTaskButton.classList.add('add')
             addTaskButton.textContent = 'ADD +'
-    
     
             todoForm.appendChild(taskTitleLabel)
             todoForm.appendChild(taskTitle)
@@ -209,7 +202,9 @@ function DOM(){
             todoForm.appendChild(addTaskButton)
     
             mainContainer.appendChild(todoForm)
-    
+            
+            // display todo event
+
             addTaskButton.addEventListener('click', () => {
                 displayTodo()
                 todoForm.reset()
@@ -222,11 +217,8 @@ function DOM(){
             function displayTodo(){
                    
                 let newTodo = new Todo(taskTitle.value, taskDesc.value, taskDate.value, taskPrior.value, newProject.name)
-
                 newProject.todos.push(newTodo)
-
                 console.log(newProjectArray)
-                
                 
                 const taskDivs = document.createElement('div')
 
@@ -279,14 +271,15 @@ function DOM(){
                     console.log(newProjectArray)
                 })
 
+
                 // edit todo form
                 
                 editTask.addEventListener('click', (event) => {
                     let target = event.target.parentElement
-                    editT()
+                    editTasks()
                 })
 
-                function editT() {
+                function editTasks() {
 
                     taskDivs.innerHTML = ''
 
@@ -294,20 +287,52 @@ function DOM(){
                     editForm.classList.add('edit-form')
                     taskDivs.appendChild(editForm)
 
+                    // title edit
+
+                    let editTitleLabel = document.createElement('label')
+                    editTitleLabel.textContent = 'Title'
+                    editTitleLabel.setAttribute('for', 'editTitle')
+                    editForm.appendChild(editTitleLabel)
+
                     let editTitle = document.createElement('input')
                     editTitle.setAttribute('type', 'text')
+                    editTitle.setAttribute('id', 'editLabel')
                     editTitle.value = tasks.textContent
                     editForm.appendChild(editTitle)
 
 
+                    // description edit
+
+                    let editDescLabel = document.createElement('label')
+                    editDescLabel.textContent = 'Description'
+                    editDescLabel.setAttribute('for', 'editDesc')
+                    editForm.appendChild(editDescLabel)
+
+
                     let editDesc = document.createElement('textarea')
-                    editDesc.textContentL = taskDescr.textContent
+                    editDesc.textContent = taskDescr.textContent
                     editForm.appendChild(editDesc)
+
+                    
+                    // date edit
+
+                    let editDateLabel = document.createElement('label')
+                    editDateLabel.textContent = 'Due-Date'
+                    editDateLabel.setAttribute('for', 'editDate')
+                    editForm.appendChild(editDateLabel)
 
                     let editDate = document.createElement('input')
                     editDate.setAttribute('type', 'date')
                     editDate.value = taskDates.textContent
                     editForm.appendChild(editDate)
+
+
+                    // priority edit
+                    
+                    let editPriorLabel = document.createElement('label')
+                    editPriorLabel.textContent = 'Priority'
+                    editPriorLabel.setAttribute('for', 'editPrior')
+                    editForm.appendChild(editPriorLabel)
 
                     let editPriority = document.createElement('select')
 
@@ -336,6 +361,7 @@ function DOM(){
                     editButton.type = 'button'
                     editForm.appendChild(editButton)
 
+
                     // edit task logic 
 
                     editButton.addEventListener('click', () => {
@@ -358,6 +384,7 @@ function DOM(){
                         taskDivs.appendChild(deleteTask)
                         taskDivs.appendChild(editTask)
 
+
                         // updates the array
 
                         let updatedTodo = new Todo(editTitle.value, editDesc.value, editDate.value, editPriority.value,newTodo.project)
@@ -366,12 +393,14 @@ function DOM(){
                         newProject.todos.splice(index, 1, updatedTodo)
                         console.log(newProjectArray)
                     });
+
                 };
             };
         };
     };
 };
 
+// export 
 
-export {DOM}
+export {DOM, mainContainer, sidebarContainer}
 

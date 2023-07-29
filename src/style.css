@@ -1,18 +1,21 @@
+/* BODY */
+
 body{
     margin: 0;
     padding: 0;
 }
 
-.blur{
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
-}
+/* MAIN CONTAINER */
 
 .container{
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 100px 300px 345px;
 }
+
+
+/* HEADER */
+
 
 .header{
 
@@ -28,12 +31,18 @@ body{
     align-items: center;
 }
 
+/* SIDEBAR */
+
+
 .sidebar{
 
     grid-row: 2/4;
     background-color: #3f7cac;
     color: #272932;
     font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 
 }
 
@@ -47,6 +56,44 @@ body{
     gap: 20px;
 }
 
+hr{
+    margin-top: 20px;
+    border: 2px solid #272932;
+    width: 250px;
+}
+
+/* PROJECT FORM */
+
+.project-form{
+
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 2px solid #272932;
+    border-radius: 10px;
+    width: 200px;
+    margin-left: 350px;
+    margin-top: 250px;
+    background-color: #3f7cac;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 800;
+}
+
+.project-form > button{
+    background-color: #272932;
+    border: 1px solid white;
+    color: white;
+    font-weight: 800;
+    padding: 7px;
+}
+
+
+/* PROJECT STUFF */
 
 .add-project{
 
@@ -58,6 +105,17 @@ body{
     border: 2px solid lightgray;
     border-radius: 20px;
     padding: 10px;
+}
+
+.project-name{
+
+    margin: 0;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: auto;
+    font-family: sans-serif;
+    font-weight: 800;
+    color: #3f7cac;
 }
 
 .project-title{
@@ -74,19 +132,8 @@ body{
     border: 2px solid #272932;
     border-radius: 10px;
 
-    
-    background-color: lightsalmon;
-}
-
-.project-name{
-
-    margin: 0;
-    margin-left: 20px;
-    margin-top: 20px;
-    width: auto;
-    font-family: sans-serif;
-    font-weight: 800;
-    color: #3f7cac;
+    cursor: pointer;
+    background-color: #017F71;
 }
 
 .new-div{
@@ -99,22 +146,8 @@ body{
 
 }
 
-.project-form{
 
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-
-    border: 2px solid #272932;
-    border-radius: 10px;
-    width: 200px;
-    margin-left: 500px;
-    margin-top: 250px;
-}
+/* TODO FORM and STUFF */
 
 .todo-form{
 
@@ -129,23 +162,12 @@ body{
     height: 400px;
     padding: 10px;
     margin-left: 290px;
-    margin-top: 20px;
+
     border-radius: 20px;
     color: white;
     font-family: sans-serif;
     font-weight: 800;
-}
-
-hr{
-    margin-top: 20px;
-    border: 2px solid #272932;
-    width: 250px;
-
-
-}
-.inactive{
-    display: none;
-
+    position: fixed;
 }
 
 
@@ -169,23 +191,33 @@ hr{
 }
 
 .task-div > h2 {
-
     margin-right: 13px;
 }
-.task-div > ul{
 
-    margin: 0;
-}
 .task-div > p{
-
     margin-top: 25px;
 }
 
-.line {
-
-    background-color: lightsalmon;
-    text-decoration: line-through;
+.task-div > ul{
+    margin: 0;
 }
+
+.add{
+
+    background-color: #272932;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 800;
+}
+
+.button-add{
+
+    background-color: #3f7cac;
+    border: 2px solid #272932;
+    color: white;
+    font-family: sans-serif;
+    font-weight: 800;
+}   
 
 .delete-button{
 
@@ -198,29 +230,22 @@ hr{
 
 }
 
-.button-add{
-
-    background-color: #3f7cac;
-    border: 2px solid #272932;
-    color: white;
-    font-family: sans-serif;
-    font-weight: 800;
-}   
-
-.add{
-
-    background-color: #272932;
-    color: white;
-    font-family: sans-serif;
-    font-weight: 800;
-}
-
-
 .edit-form{
 
     display: flex;
     gap: 20px;
     align-items: center;
+}
+
+.edit-form > button{
+
+    border: 2px solid #272932;
+    border-radius: 5px;
+    background-color: green;
+    font-family: sans-serif;
+    font-weight: 800;
+    color: white;
+
 }
 
 .edit-task-button{
@@ -232,3 +257,30 @@ hr{
     font-family: sans-serif;
     font-weight: 800;
 }
+
+.edit-form > label{
+
+    font-family: sans-serif;
+    font-weight: 800;
+}
+
+.edit-form > input,
+.edit-form > select{
+
+    border: 2px solid #272932;
+    border-radius: 5px;
+
+}
+
+
+/* MISCELLANEOUS */
+
+.line {
+
+    background-color: lightsalmon;
+    text-decoration: line-through;
+}
+
+
+
+

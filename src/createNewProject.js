@@ -15,5 +15,11 @@ class Project{
     }
 }
 
+// stores all the projects and creates default project
+
+let defaultProject = new Project('DEFAULT')
 let newProjectArray = []
-export {Project, newProjectArray}
+
+// export
+
+export {Project, defaultProject, newProjectArray}
