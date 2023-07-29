@@ -1,5 +1,10 @@
+// import 
+
 import { defaultProject ,newProjectArray } from "./createNewProject"
 import { mainContainer, sidebarContainer } from "./DOM"
+import { Todo } from "./createNewToDo";
+
+// creates default
 
 function displayProject(){
 
@@ -222,6 +227,10 @@ function displayProject(){
                 console.log(newProjectArray)
             })
 
+            // toggle complete
+            taskDivs.addEventListener('click' , () => {
+                taskDivs.classList.toggle('line')
+            })
 
             // edit todo form
             

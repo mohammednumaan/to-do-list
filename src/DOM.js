@@ -271,6 +271,11 @@ function DOM(){
                     console.log(newProjectArray)
                 })
 
+                // toggle complete
+                taskDivs.addEventListener('click' , () => {
+                    taskDivs.classList.toggle('line')
+                })
+
 
                 // edit todo form
                 
@@ -393,7 +398,6 @@ function DOM(){
                         newProject.todos.splice(index, 1, updatedTodo)
                         console.log(newProjectArray)
                     });
-
                 };
             };
         };
