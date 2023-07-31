@@ -2,7 +2,7 @@
 // import modules
 import {Project, newProjectArray} from "./createNewProject";
 import { Todo } from "./createNewToDo";
-import { setLocalStorage } from "./localstorage";
+import { getLocalStorage, setLocalStorage } from "./localstorage";
 import { switchTabs } from "./functionalities/switchTabs";
 import { editFunctionality } from "./functionalities/editTasks";
 import { deleteTasks } from "./functionalities/deleteTasks";
@@ -19,7 +19,7 @@ const newProjectButton = document.querySelector('.add-project')
 
 // main dom function
 
-function DOM (){
+function DOM (newProjectArray){
 
     newProjectButton.addEventListener('click', projectForm)
 
@@ -125,6 +125,7 @@ function DOM (){
         })
 
         setLocalStorage()
+        
     }
 
     // todo
@@ -206,6 +207,7 @@ function DOM (){
         })
 
         setLocalStorage()
+        getLocalStorage()
     }
 
 
@@ -262,6 +264,8 @@ function DOM (){
         taskDivs.appendChild(completeTask)
 
         setLocalStorage()
+        getLocalStorage()
+        
 
 
         // delete event
@@ -292,6 +296,7 @@ function DOM (){
             }
 
             setLocalStorage()
+            getLocalStorage()
         })
     }
 
