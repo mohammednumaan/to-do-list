@@ -1,3 +1,4 @@
+/*
 // import 
 import { defaultProject ,newProjectArray } from "./createNewProject"
 import { mainContainer, sidebarContainer } from "./DOM"
@@ -6,6 +7,7 @@ import { deleteTasks } from "./deleteTasks";
 import { editFunctionality } from "./editTasks";
 import { switchTabs } from "./switchTabs";
 import { completeTasks } from "./completeTasks";
+import { setLocalStorage } from "./localstorage";
 
 // creates default
 
@@ -55,6 +57,8 @@ function displayProject(){
     projectDiv.style.display = 'none'
 
     newTaskButton.addEventListener('click', createToDoDiv)
+
+    setLocalStorage()
 
     // switch tabs event
 
@@ -147,6 +151,8 @@ function displayProject(){
 
         mainContainer.appendChild(todoForm)
         
+        setLocalStorage()
+
         // display todo event
 
         addTaskButton.addEventListener('click', () => {
@@ -212,13 +218,16 @@ function displayProject(){
             completeTask.textContent = 'Completed!'
             taskDivs.appendChild(completeTask)
 
-            projectDiv.appendChild(taskDivs)    
+            projectDiv.appendChild(taskDivs)   
+            
+            setLocalStorage()
 
 
             // delete button
 
             deleteTask.addEventListener('click', (event) => {
                 deleteTasks(event, newProject, projectDiv,newTodo)
+                setLocalStorage()
             })
 
             // edit button
@@ -231,6 +240,15 @@ function displayProject(){
             // complete button
             completeTask.addEventListener('click' , () => {
                 completeTasks(tasks, taskDescr, taskDates, taskPriority)
+                if(tasks.classList.contains('line')){
+                    completeTask.textContent = 'Not Completed!'
+                    completeTask.style.backgroundColor = '#db3a34'
+                }
+                else{
+                    completeTask.textContent = 'Completed!'
+                    completeTask.style.backgroundColor = 'green'
+                }
+                setLocalStorage()
             })
 
 
@@ -341,7 +359,9 @@ function displayProject(){
                     taskDivs.appendChild(completeTask)
 
                     editFunctionality(editTitle, editDesc, editDate, editPriority, newTodo, newProject) 
+                    setLocalStorage()
                 })
+
 
             };
         };
@@ -349,3 +369,5 @@ function displayProject(){
 };
 
 export {displayProject}
+
+*/

@@ -13,7 +13,6 @@ body{
     grid-template-rows: 100px 300px 345px;
 }
 
-
 /* HEADER */
 
 
@@ -76,12 +75,14 @@ hr{
     border: 2px solid #272932;
     border-radius: 10px;
     width: 200px;
-    margin-left: 350px;
-    margin-top: 250px;
+    margin-left: 20px;
+    margin-top: 20px;
     background-color: #3f7cac;
     color: white;
     font-family: sans-serif;
     font-weight: 800;
+
+
 }
 
 .project-form > button{
@@ -151,18 +152,17 @@ hr{
 
 .todo-form{
 
-
     border: 7px solid #272932;
     background-color: #3f7cac;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    width: 300px;
-    height: 400px;
+    width: 1000px;
+    height: 60px;
     padding: 10px;
-    margin-left: 290px;
+    margin-top: 40px;
+    margin-left: 100px;
 
     border-radius: 20px;
     color: white;
@@ -170,7 +170,6 @@ hr{
     font-weight: 800;
 
 }
-
 
 .task-div{
 

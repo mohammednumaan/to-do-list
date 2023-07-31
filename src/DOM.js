@@ -1,9 +1,11 @@
 // import modules
 
+import { completeTasks } from "./completeTasks";
 import {Project, newProjectArray} from "./createNewProject";
 import { Todo } from "./createNewToDo";
 import { deleteTasks } from "./deleteTasks";
 import { editFunctionality } from "./editTasks";
+import { setLocalStorage } from "./localstorage";
 import { switchTabs } from "./switchTabs";
 
 
@@ -12,381 +14,370 @@ import { switchTabs } from "./switchTabs";
 const sidebarContainer = document.querySelector('.sidebar-container')
 const mainContainer = document.querySelector('.main-screen-container')
 const container = document.querySelector('.container')
+const newProjectButton = document.querySelector('.add-project')
 
 
 
 // main dom function
 
-function DOM(){
+function DOM (){
+
+    newProjectButton.addEventListener('click', projectForm)
 
 
-    // creates project form
+    // project
 
-    const form = document.createElement('form')
-    form.classList.add('project-form')
+    
+    function projectForm(){
+        
+        const form = document.createElement('form')
+        form.classList.add('project-form')
 
+        const titleLabel = document.createElement('label')
+        titleLabel.setAttribute('for', 'new-project')
 
-    const titleLabel = document.createElement('label')
-    titleLabel.setAttribute('for', 'new-project')
-
-    const titleName = document.createElement('input')
-    titleName.setAttribute('type', 'text')
-    titleName.setAttribute('id', 'new-project')
-
-
-    const addProject = document.createElement('button')
-    addProject.setAttribute('type', 'button')
-
-    addProject.textContent = 'CREATE PROJECT'
-    titleLabel.textContent = 'TITLE'
-
-    form.appendChild(titleLabel)
-    form.appendChild(titleName)
-    form.appendChild(addProject)
-    mainContainer.appendChild(form)
+        const titleName = document.createElement('input')
+        titleName.setAttribute('type', 'text')
+        titleName.setAttribute('id', 'new-project')
 
 
+        const addProject = document.createElement('button')
+        addProject.setAttribute('type', 'button')
 
-    // creates project div
+        addProject.textContent = 'CREATE PROJECT'
+        titleLabel.textContent = 'TITLE'
 
-    const projectDiv = document.createElement('div')
-    const projectName = document.createElement('h2')
-    projectName.classList.add('project-title')
-    projectName.classList.add('project-title-hover')
+        form.appendChild(titleLabel)
+        form.appendChild(titleName)
+        form.appendChild(addProject)
+        sidebarContainer.appendChild(form)
 
-    projectDiv.appendChild(projectName)
-    sidebarContainer.appendChild(projectDiv)
+        addProject.addEventListener('click', () => {
+            displayProject(form, titleName)
+        })
+        
 
-    addProject.addEventListener('click', displayProject)
+    }
 
+    // project
 
-    // displays project div
+    function projectDivs(name) {
 
-    function displayProject(){
-
-        // creates project-to-do display/divs
-
-        const newProject = new Project(titleName.value, false)
-        newProjectArray.push(newProject)
-        form.reset()
-        form.style.display = 'none'
-
-        const projectDiv = document.createElement('div')
-        projectDiv.classList.add('project-div')
+        const projectNameDiv = document.createElement('div')
+        const projectName = document.createElement('h2')
+        projectNameDiv.appendChild(projectName)
+        sidebarContainer.appendChild(projectNameDiv)
+        projectName.classList.add('project-title')
+        projectName.classList.add('project-title-hover')
+        projectName.innerText = name.name
+        setLocalStorage()
+    };
     
 
+    // project
+
+    function displayProject(prjForm, title) {
+
+        const newProject = new Project(title.value)
+        newProjectArray.push(newProject)
+        console.log(newProjectArray)
+
+        prjForm.reset()
+        prjForm.style.display = 'none'
+        
+        const projectDiv = document.createElement('div')
+        projectDiv.classList.add('project-div')
+            
         const projectTitle = document.createElement('h2')
         projectTitle.classList.add('project-name')
-
+        
         const newTaskButton = document.createElement('button')
         newTaskButton.classList.add('button-add')
         newTaskButton.setAttribute('type', 'button')
-
+        
         const newButtonDiv = document.createElement('div')
         newButtonDiv.classList.add('new-div')
-    
+            
+        newTaskButton.textContent = 'ADD TASK +'
+        projectDiv.id = projectTitle.textContent
+        projectTitle.innerText = newProject.name
+        //projectDiv.style.display = 'none'
+
         mainContainer.appendChild(projectDiv)
         newButtonDiv.appendChild(newTaskButton)
         projectDiv.appendChild(projectTitle)
         projectDiv.appendChild(newButtonDiv)
-
-
-
-        projectName.innerHTML = newProject.name
-        projectTitle.innerText = newProject.name
-        newTaskButton.textContent = 'ADD TASK +'
-        projectDiv.id = projectTitle.textContent
-        projectDiv.style.display = 'none'
-
-        newTaskButton.addEventListener('click', createToDoDiv)
-
-        // switch tabs event
-
-        projectName.addEventListener('click', () => {
-            switchTabs(projectDiv, projectTitle)
+        
+        projectDivs(newProject)
+        newTaskButton.addEventListener('click', () => {
+            todoForm(newProject, projectDiv)
         })
+        setLocalStorage()
+    }
+
+    // todo
+
+    function todoForm(project, prjDiv){
+
+        const todoForm = document.createElement('form')
+        todoForm.classList.add('todo-form')
+    
+        let taskTitle = document.createElement('input')
+        taskTitle.setAttribute('type', 'text')
+        taskTitle.setAttribute('id', 'new-task')
+        const taskTitleLabel = document.createElement('label')
+        taskTitleLabel.setAttribute('for', 'new-task')
+        taskTitleLabel.textContent = 'Title Of Your Task'
+    
+        let taskDesc = document.createElement('textarea')
+        taskTitle.setAttribute('id', 'new-desc')
+        taskTitle.required = true;
+        const taskDescLabel = document.createElement('label')
+        taskDescLabel.setAttribute('for', 'new-desc')
+        taskDescLabel.textContent = 'Description Of Your Task'
+    
+        let taskDate = document.createElement('input')
+        taskDate.setAttribute('type', 'date')
+        taskDate.setAttribute('id', 'task-date')
+        taskTitle.required = true;
+        const taskDateLabel = document.createElement('label')
+        taskDateLabel.textContent = 'DUE-DATE Of Your Task'
+        taskDateLabel.setAttribute('for', 'task-date')
+    
+        let taskPrior = document.createElement('select')
+        taskPrior.setAttribute('id', 'priority')
+        taskTitle.required = true;
+        const taskPriorLabel = document.createElement('label')
+        taskPriorLabel.setAttribute('for', 'priority')
+        taskPriorLabel.textContent = 'Priority Of Your Task'
+    
+        const low = document.createElement('option')
+        low.setAttribute('name', 'Low Priority')
+        low.textContent = 'Low'
+        taskPrior.appendChild(low)
+
+        const medium = document.createElement('option')
+        medium.setAttribute('name', 'Medium Priority')
+        medium.textContent = 'Medium'
+        taskPrior.appendChild(medium)
+    
+        const high= document.createElement('option')
+        high.setAttribute('name', 'High Priority')
+        high.textContent = 'High'
+        taskPrior.appendChild(high)
+    
+        const addTaskButton = document.createElement('button')
+        addTaskButton.setAttribute('type', 'button')
+        addTaskButton.classList.add('add')
+        addTaskButton.textContent = 'ADD +'
+    
+        todoForm.appendChild(taskTitleLabel)
+        todoForm.appendChild(taskTitle)
+    
+        todoForm.appendChild(taskDescLabel)
+        todoForm.appendChild(taskDesc)
+    
+        todoForm.appendChild(taskDateLabel)
+        todoForm.appendChild(taskDate)
+    
+        todoForm.appendChild(taskPriorLabel)
+        todoForm.appendChild(taskPrior)
+        todoForm.appendChild(addTaskButton)
+    
+        mainContainer.appendChild(todoForm)
+        setLocalStorage()
+
+        addTaskButton.addEventListener('click', () => {
+            displayToDo(project, taskTitle, taskDesc, taskDate, taskPrior, prjDiv)
+            todoForm.reset()
+            todoForm.style.display ='none'
+        })
+    }
+
+
+    // todo
+
+    function displayToDo(project, title,desc,date, prior, div){
+
+        let newTodo = new Todo(title.value, desc.value, date.value, prior.value, project.name)
+        project.todos.push(newTodo)
+        console.log(newProjectArray)
         
-        // creates project todos
-    
-        function createToDoDiv(){
-    
-            // creates todo form
-    
-            const todoForm = document.createElement('form')
-            todoForm.classList.add('todo-form')
+        const taskDivs = document.createElement('div')
+        taskDivs.classList.add('task-div')
+
+        const taskUL = document.createElement('ul')
+        taskDivs.appendChild(taskUL)
+        const taskLI = document.createElement('li')
+        taskUL.appendChild(taskLI)
+
+        const tasks = document.createElement('h2')
+        tasks.textContent = newTodo.title
+        taskLI.appendChild(tasks)
+
+        const taskDescr = document.createElement('p')
+        taskDescr.textContent = `${newTodo.desc}`
+        taskDivs.appendChild(taskDescr)
+
+        const taskDates = document.createElement('p')
+        taskDates.textContent = `${newTodo.date}`
+        taskDivs.appendChild(taskDates)
+
+        const taskPriority = document.createElement('p')
+        taskPriority.textContent = `${newTodo.priority}`
+        taskDivs.appendChild(taskPriority)
+
+        const deleteTask = document.createElement('button')
+        deleteTask.setAttribute('type', 'button')
+        deleteTask.classList.add('delete-button')
+        deleteTask.textContent = 'Delete This Task'
+        taskDivs.appendChild(deleteTask)
+
+        const editTask = document.createElement('button')
+        editTask.setAttribute('type', 'button')
+        editTask.classList.add('edit-button')
+        editTask.textContent = 'Edit This Task'
+        editTask.classList.add('edit-task-button')
+        taskDivs.appendChild(editTask)
+        div.appendChild(taskDivs)    
+
+        const completeTask = document.createElement('button')
+        completeTask.setAttribute('type', 'button')
+        completeTask.classList.add('complete-button')
+        completeTask.textContent = 'Completed!'
+        taskDivs.appendChild(completeTask)
+
+        setLocalStorage()
+
+
+        // delete event
+
+        deleteTask.addEventListener('click', (event) => {
+            deleteTasks(event, project, div,newTodo)
+            setLocalStorage()
+  
+        })
+
+        // edit event
+
+        editTask.addEventListener('click', () => {
+            editForm(taskDivs, tasks,taskDescr,taskDates,taskPriority,taskLI, taskUL, deleteTask, editTask, completeTask, newTodo, project)
+        })
+
+        // complete event
         
-            let taskTitle = document.createElement('input')
-            taskTitle.setAttribute('type', 'text')
-            taskTitle.setAttribute('id', 'new-task')
-            
-            taskTitle.required = true;
-    
-            const taskTitleLabel = document.createElement('label')
-            taskTitleLabel.setAttribute('for', 'new-task')
-            taskTitleLabel.textContent = 'Title Of Your Task'
-    
-        
-            let taskDesc = document.createElement('textarea')
-            taskTitle.setAttribute('id', 'new-desc')
-            taskTitle.required = true;
-    
-            const taskDescLabel = document.createElement('label')
-            taskDescLabel.setAttribute('for', 'new-desc')
-            taskDescLabel.textContent = 'Description Of Your Task'
-    
-    
-            let taskDate = document.createElement('input')
-            taskDate.setAttribute('type', 'date')
-            taskDate.setAttribute('id', 'task-date')
-            taskTitle.required = true;
-    
-            const taskDateLabel = document.createElement('label')
-            taskDateLabel.textContent = 'DUE-DATE Of Your Task'
-            taskDateLabel.setAttribute('for', 'task-date')
-    
-    
-            let taskPrior = document.createElement('select')
-            taskPrior.setAttribute('id', 'priority')
-            taskTitle.required = true;
-    
-            const taskPriorLabel = document.createElement('label')
-            taskPriorLabel.setAttribute('for', 'priority')
-            taskPriorLabel.textContent = 'Priority Of Your Task'
-    
-    
-            const low = document.createElement('option')
-            low.setAttribute('name', 'Low Priority')
-            low.textContent = 'Low'
-            taskPrior.appendChild(low)
-    
-            const medium = document.createElement('option')
-            medium.setAttribute('name', 'Medium Priority')
-            medium.textContent = 'Medium'
-            taskPrior.appendChild(medium)
-    
-            const high= document.createElement('option')
-            high.setAttribute('name', 'High Priority')
-            high.textContent = 'High'
-            taskPrior.appendChild(high)
-    
-            const addTaskButton = document.createElement('button')
-            addTaskButton.setAttribute('type', 'button')
-            addTaskButton.classList.add('add')
-            addTaskButton.textContent = 'ADD +'
-    
-            todoForm.appendChild(taskTitleLabel)
-            todoForm.appendChild(taskTitle)
-    
-            todoForm.appendChild(taskDescLabel)
-            todoForm.appendChild(taskDesc)
-    
-            todoForm.appendChild(taskDateLabel)
-            todoForm.appendChild(taskDate)
-    
-            todoForm.appendChild(taskPriorLabel)
-            todoForm.appendChild(taskPrior)
-            todoForm.appendChild(addTaskButton)
-    
-            container.appendChild(todoForm)
-
-            // display todo event
-
-            addTaskButton.addEventListener('click', () => {
-                displayTodo()
-                todoForm.reset()
-                todoForm.style.display ='none'
-            })
-            
-            // displays todo
-    
-            function displayTodo(){
-                   
-                let newTodo = new Todo(taskTitle.value, taskDesc.value, taskDate.value, taskPrior.value, newProject.name)
-                newProject.todos.push(newTodo)
-                console.log(newProjectArray)
-                
-                const taskDivs = document.createElement('div')
-
-                taskDivs.classList.add('task-div')
-
-                const taskUL = document.createElement('ul')
-                taskDivs.appendChild(taskUL)
-                
-                const taskLI = document.createElement('li')
-                taskUL.appendChild(taskLI)
-
-                const tasks = document.createElement('h2')
-      
-                tasks.textContent = newTodo.title
-                taskLI.appendChild(tasks)
-    
-                const taskDescr = document.createElement('p')
-                taskDescr.textContent = `${newTodo.desc}`
-                taskDivs.appendChild(taskDescr)
-    
-                const taskDates = document.createElement('p')
-                taskDates.textContent = `${newTodo.date}`
-                taskDivs.appendChild(taskDates)
-    
-                const taskPriority = document.createElement('p')
-                taskPriority.textContent = `${newTodo.priority}`
-                taskDivs.appendChild(taskPriority)
-
-                const deleteTask = document.createElement('button')
-                deleteTask.setAttribute('type', 'button')
-                deleteTask.classList.add('delete-button')
-                deleteTask.textContent = 'Delete This Task'
-                taskDivs.appendChild(deleteTask)
-
-                const editTask = document.createElement('button')
-                editTask.setAttribute('type', 'button')
-                editTask.classList.add('edit-button')
-                editTask.textContent = 'Edit This Task'
-                editTask.classList.add('edit-task-button')
-                taskDivs.appendChild(editTask)
-                projectDiv.appendChild(taskDivs)    
-
-                const completeTask = document.createElement('button')
-                completeTask.setAttribute('type', 'button')
-                completeTask.classList.add('complete-button')
+        completeTask.addEventListener('click' , () => {
+            completeTasks(tasks, taskDescr, taskDates, taskPriority)
+            if(tasks.classList.contains('line')){
+                completeTask.textContent = 'Not Completed!'
+                completeTask.style.backgroundColor = '#db3a34'
+            }
+            else{
                 completeTask.textContent = 'Completed!'
-                taskDivs.appendChild(completeTask)
+                completeTask.style.backgroundColor = 'green'
+            }
+            setLocalStorage()
+        })
+    }
 
 
-                // delete button
+    // edit
 
-                deleteTask.addEventListener('click', (event) => {
-                    deleteTasks(event, newProject, projectDiv,newTodo)
+    function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, todo, project){
+        
+        div.innerHTML = ''
 
-                })
+        let editForm = document.createElement('form')
+        editForm.classList.add('edit-form')
+        div.appendChild(editForm)
 
-                // edit button
-
-                editTask.addEventListener('click', editForm)
-                
-                // complete button
-
-                completeTask.addEventListener('click' , () => {
-                    completeTasks(tasks, taskDescr, taskDates, taskPriority)
-                })
-
-
-                function editForm() {
-
-                    taskDivs.innerHTML = ''
-
-                    let editForm = document.createElement('form')
-                    editForm.classList.add('edit-form')
-                    taskDivs.appendChild(editForm)
-
-                    // title edit
-
-                    let editTitleLabel = document.createElement('label')
-                    editTitleLabel.textContent = 'Title'
-                    editTitleLabel.setAttribute('for', 'editTitle')
-                    editForm.appendChild(editTitleLabel)
-
-                    let editTitle = document.createElement('input')
-                    editTitle.setAttribute('type', 'text')
-                    editTitle.setAttribute('id', 'editLabel')
-                    editTitle.value = tasks.textContent
-                    editForm.appendChild(editTitle)
+        let editTitleLabel = document.createElement('label')
+        editTitleLabel.textContent = 'Title'
+        editTitleLabel.setAttribute('for', 'editTitle')
+        editForm.appendChild(editTitleLabel)
+        let editTitle = document.createElement('input')
+        editTitle.setAttribute('type', 'text')
+        editTitle.setAttribute('id', 'editLabel')
+        editTitle.value = title.textContent
+        editForm.appendChild(editTitle)
 
 
-                    // description edit
+        let editDescLabel = document.createElement('label')
+        editDescLabel.textContent = 'Description'
+        editDescLabel.setAttribute('for', 'editDesc')
+        editForm.appendChild(editDescLabel)
+        let editDesc = document.createElement('textarea')
+        editDesc.textContent = desc.textContent
+        editForm.appendChild(editDesc)
 
-                    let editDescLabel = document.createElement('label')
-                    editDescLabel.textContent = 'Description'
-                    editDescLabel.setAttribute('for', 'editDesc')
-                    editForm.appendChild(editDescLabel)
-
-
-                    let editDesc = document.createElement('textarea')
-                    editDesc.textContent = taskDescr.textContent
-                    editForm.appendChild(editDesc)
-
-                    
-                    // date edit
-
-                    let editDateLabel = document.createElement('label')
-                    editDateLabel.textContent = 'Due-Date'
-                    editDateLabel.setAttribute('for', 'editDate')
-                    editForm.appendChild(editDateLabel)
-
-                    let editDate = document.createElement('input')
-                    editDate.setAttribute('type', 'date')
-                    editDate.value = taskDates.textContent
-                    editForm.appendChild(editDate)
+        
+        let editDateLabel = document.createElement('label')
+        editDateLabel.textContent = 'Due-Date'
+        editDateLabel.setAttribute('for', 'editDate')
+        editForm.appendChild(editDateLabel)
+        let editDate = document.createElement('input')
+        editDate.setAttribute('type', 'date')
+        editDate.value = date.textContent
+        editForm.appendChild(editDate)
 
 
-                    // priority edit
-                    
-                    let editPriorLabel = document.createElement('label')
-                    editPriorLabel.textContent = 'Priority'
-                    editPriorLabel.setAttribute('for', 'editPrior')
-                    editForm.appendChild(editPriorLabel)
+        let editPriorLabel = document.createElement('label')
+        editPriorLabel.textContent = 'Priority'
+        editPriorLabel.setAttribute('for', 'editPrior')
+        editForm.appendChild(editPriorLabel)
+        let editPriority = document.createElement('select')
 
-                    let editPriority = document.createElement('select')
+        let lowPrior = document.createElement('option')
+        lowPrior.setAttribute('name', 'Low')
+        lowPrior.textContent = 'Low'
+        editPriority.appendChild(lowPrior)
 
-                    let lowPrior = document.createElement('option')
-                    lowPrior.setAttribute('name', 'Low')
-                    lowPrior.textContent = 'Low'
-                    editPriority.appendChild(lowPrior)
+        let mediumPrior = document.createElement('option')
+        mediumPrior.setAttribute('name', 'Medium')
+        mediumPrior.textContent = 'Medium'
+        editPriority.appendChild(mediumPrior)
+
+        let highPrior= document.createElement('option')
+        highPrior.setAttribute('name', 'High Priority')
+        highPrior.textContent = 'High'
+        editPriority.appendChild(highPrior)
+
+        editPriority.value = prior.textContent
+        editForm.appendChild(editPriority)
+
+        let editButton = document.createElement('button')
+        editButton.textContent = 'Update Task'
+        editButton.type = 'button'
+        editForm.appendChild(editButton)
+
+        editButton.addEventListener('click', () => {
+            editForm.style.display = 'none'
+
+            title.textContent = editTitle.value
+            li.appendChild(title)
+            ul.appendChild(li)
+            div.appendChild(ul)
             
+            desc.textContent = editDesc.value
+            div.appendChild(desc)
             
-                    let mediumPrior = document.createElement('option')
-                    mediumPrior.setAttribute('name', 'Medium')
-                    mediumPrior.textContent = 'Medium'
-                    editPriority.appendChild(mediumPrior)
+            date.textContent = editDate.value
+            div.appendChild(date)
             
+            prior.textContent = editPriority.value   
+            div.appendChild(prior)
             
-                    let highPrior= document.createElement('option')
-                    highPrior.setAttribute('name', 'High Priority')
-                    highPrior.textContent = 'High'
-                    editPriority.appendChild(highPrior)
+            div.appendChild(del)
+            div.appendChild(edit)
+            div.appendChild(complete)
 
-                    editPriority.value = taskPriority.textContent
-                    editForm.appendChild(editPriority)
+            editFunctionality(editTitle, editDesc, editDate, editPriority, todo, project) 
+            setLocalStorage()
+        })
+    }
 
-                    let editButton = document.createElement('button')
-                    editButton.textContent = 'Update Task'
-                    editButton.type = 'button'
-                    editForm.appendChild(editButton)
-
-
-                    // update button
-
-                    editButton.addEventListener('click', () => {
-                        editForm.style.display = 'none'
-
-                        tasks.textContent = editTitle.value
-                        taskLI.appendChild(tasks)
-                        taskUL.appendChild(taskLI)
-                        taskDivs.appendChild(taskUL)
-                        
-                        taskDescr.textContent = editDesc.value
-                        taskDivs.appendChild(taskDescr)
-                        
-                        taskDates.textContent = editDate.value
-                        taskDivs.appendChild(taskDates)
-                        
-                        taskPriority.textContent = editPriority.value   
-                        taskDivs.appendChild(taskPriority)
-                        
-                        taskDivs.appendChild(deleteTask)
-                        taskDivs.appendChild(editTask)
-                        taskDivs.appendChild(completeTask)
-
-                        editFunctionality(editTitle, editDesc, editDate, editPriority, newTodo, newProject) 
-                        
-                    })
-                };
-            };
-        };
-    };
 };
 
-// export 
 
 export {DOM, mainContainer, sidebarContainer}
 
