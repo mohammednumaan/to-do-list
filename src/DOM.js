@@ -27,7 +27,7 @@ function DOM (){
 
     // project
 
-    
+
     function projectForm(){
         
         const form = document.createElement('form')
@@ -61,7 +61,7 @@ function DOM (){
 
     // project
 
-    function projectDivs(name) {
+    function projectDivs(name, prj, task) {
 
         const projectNameDiv = document.createElement('div')
         const projectName = document.createElement('h2')
@@ -70,7 +70,14 @@ function DOM (){
         projectName.classList.add('project-title')
         projectName.classList.add('project-title-hover')
         projectName.innerText = name.name
-        setLocalStorage()
+
+
+        projectNameDiv.appendChild(projectName)
+        sidebarContainer.appendChild(projectNameDiv)
+
+        projectName.addEventListener('click' , () => {
+            switchTabs(prj, task)
+        })
     };
     
 
@@ -101,14 +108,21 @@ function DOM (){
         newTaskButton.textContent = 'ADD TASK +'
         projectDiv.id = projectTitle.textContent
         projectTitle.innerText = newProject.name
-        //projectDiv.style.display = 'none'
+        projectDiv.style.display = 'none'
 
         mainContainer.appendChild(projectDiv)
         newButtonDiv.appendChild(newTaskButton)
         projectDiv.appendChild(projectTitle)
         projectDiv.appendChild(newButtonDiv)
+
+       
+        projectTitle.innerText = newProject.name
+        newTaskButton.textContent = 'ADD TASK +'
+        projectDiv.id = projectTitle.textContent
+        projectDiv.style.display = 'none'
         
-        projectDivs(newProject)
+        projectDivs(newProject, projectDiv, projectTitle)
+    
         newTaskButton.addEventListener('click', () => {
             todoForm(newProject, projectDiv)
         })
@@ -185,13 +199,14 @@ function DOM (){
         todoForm.appendChild(addTaskButton)
     
         mainContainer.appendChild(todoForm)
-        setLocalStorage()
+   
 
         addTaskButton.addEventListener('click', () => {
             displayToDo(project, taskTitle, taskDesc, taskDate, taskPrior, prjDiv)
             todoForm.reset()
             todoForm.style.display ='none'
         })
+        setLocalStorage()
     }
 
 
