@@ -97,6 +97,7 @@ function DOM (){
             
         const projectTitle = document.createElement('h2')
         projectTitle.classList.add('project-name')
+        projectTitle.id = newProjectArray.indexOf(newProject)
         
         const newTaskButton = document.createElement('button')
         newTaskButton.classList.add('button-add')
@@ -105,11 +106,6 @@ function DOM (){
         const newButtonDiv = document.createElement('div')
         newButtonDiv.classList.add('new-div')
             
-        newTaskButton.textContent = 'ADD TASK +'
-        projectDiv.id = projectTitle.textContent
-        projectTitle.innerText = newProject.name
-        projectDiv.style.display = 'none'
-
         mainContainer.appendChild(projectDiv)
         newButtonDiv.appendChild(newTaskButton)
         projectDiv.appendChild(projectTitle)
@@ -118,7 +114,7 @@ function DOM (){
        
         projectTitle.innerText = newProject.name
         newTaskButton.textContent = 'ADD TASK +'
-        projectDiv.id = projectTitle.textContent
+        projectDiv.id = projectTitle.id
         projectDiv.style.display = 'none'
         
         projectDivs(newProject, projectDiv, projectTitle)
