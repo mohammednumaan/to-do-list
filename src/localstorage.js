@@ -6,5 +6,11 @@ function setLocalStorage(){
     localStorage.setItem('project', JSON.stringify(newProjectArray))
 }
 
+function getLocalStorage(){
+    let data = JSON.parse(localStorage.getItem('project'))
+    return data;
+   
+}
 
-export {setLocalStorage}
+
+export {setLocalStorage, getLocalStorage}

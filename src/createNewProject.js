@@ -1,6 +1,6 @@
 // creates project object
 
-import { setLocalStorage } from "./localstorage";
+import { getLocalStorage, setLocalStorage } from "./localstorage";
 
 class Project{
     constructor(name){
@@ -11,11 +11,13 @@ class Project{
     addTask(task){
         this.todos.push(task)
         setLocalStorage()
+        getLocalStorage()
     }
 
     removeTask(task){
         this.todos = this.todos.filter((todo) => todo.title !== task);
         setLocalStorage()
+        getLocalStorage()
     }
 
 
@@ -26,7 +28,12 @@ class Project{
 let defaultProject = new Project('DEFAULT')
 let newProjectArray = []
 
+function setProjects(projects){
+    newProjectArray = projects;
+    return newProjectArray
+}
+
 
 // export
 
-export {Project, defaultProject, newProjectArray}
+export {Project, defaultProject, newProjectArray, setProjects}

@@ -19,7 +19,7 @@ const newProjectButton = document.querySelector('.add-project')
 
 // main dom function
 
-function DOM (newProjectArray){
+function DOM (){
 
     newProjectButton.addEventListener('click', projectForm)
 
@@ -279,7 +279,7 @@ function DOM (newProjectArray){
         // edit event
 
         editTask.addEventListener('click', () => {
-            editForm(taskDivs, tasks,taskDescr,taskDates,taskPriority,taskLI, taskUL, deleteTask, editTask, completeTask, newTodo, project)
+            editForm(taskDivs, tasks,taskDescr,taskDates,taskPriority,taskLI,taskUL,deleteTask,editTask,completeTask,newTodo,project)
         })
 
         // complete event
