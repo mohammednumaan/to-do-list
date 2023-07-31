@@ -26,10 +26,7 @@ class Project{
 // stores all the projects and creates default project
 
 let defaultProject = new Project('DEFAULT')
-let newProjectArray = []
-
-
-
+let newProjectArray = [];
 
 
 // export

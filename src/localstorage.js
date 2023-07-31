@@ -11,20 +11,17 @@ function setLocalStorage(){
 function getLocalStorage(){
 
     let data = JSON.parse(localStorage.getItem('project'))
-    let newList = data;
-    let prjName = ''
+    let newList = data
+    let prjName = 'INBOX'
 
-    for (const key in newList){
-        let name = newList[key].name
-        prjName = name
+    for (let i = 0; i < newList.length; i++){
+        let name = newList[i].name
+        prjName = name;
 
     }
     return prjName
 
 }
-
-
-
 
 
 export {setLocalStorage, getLocalStorage}
