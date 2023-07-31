@@ -17,11 +17,18 @@ const newProjectButton = document.querySelector('.add-project')
 
 
 
+
 // main dom function
 
 function DOM (){
 
-    newProjectButton.addEventListener('click', projectForm)
+    displayProject(getLocalStorage())
+
+    newProjectButton.addEventListener('click', () => {
+        getLocalStorage()
+        projectForm()
+    })
+    
 
 
     // project
@@ -52,7 +59,11 @@ function DOM (){
         sidebarContainer.appendChild(form)
 
         addProject.addEventListener('click', () => {
-            displayProject(form, titleName)
+            let title = titleName.value
+            displayProject(title)
+            form.reset()
+            form.style.display = 'none'
+            
         })
         
 
@@ -61,7 +72,7 @@ function DOM (){
     // project
 
     function projectDivs(name, prj, task) {
-
+        
         const projectNameDiv = document.createElement('div')
         const projectName = document.createElement('h2')
         projectNameDiv.appendChild(projectName)
@@ -84,14 +95,11 @@ function DOM (){
 
     // project
 
-    function displayProject(prjForm, title) {
+    function displayProject(prjTitle) {
         
-        const newProject = new Project(title.value)
+        const newProject = new Project(prjTitle)
         newProjectArray.push(newProject)
         console.log(newProjectArray)
-
-        prjForm.reset()
-        prjForm.style.display = 'none'
         
         const projectDiv = document.createElement('div')
         projectDiv.classList.add('project-div')
@@ -124,6 +132,7 @@ function DOM (){
             todoForm(newProject, projectDiv)
         })
 
+  
         setLocalStorage()
         
     }
@@ -207,7 +216,7 @@ function DOM (){
         })
 
         setLocalStorage()
-        getLocalStorage()
+ 
     }
 
 
@@ -296,7 +305,7 @@ function DOM (){
             }
 
             setLocalStorage()
-            getLocalStorage()
+
         })
     }
 

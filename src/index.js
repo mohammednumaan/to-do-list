@@ -1,11 +1,11 @@
 import { DOM } from "./DOM";
 import { getLocalStorage, loadTasks } from "./localstorage";
-import { newProjectArray, setProjects } from "./createNewProject";
+import { newProjectArray} from "./createNewProject";
 
-setProjects(getLocalStorage())
-console.log(newProjectArray)
+
+//setProjects(getLocalStorage())
+getLocalStorage()
 window.onload = getLocalStorage;
-
 DOM()
 
 
