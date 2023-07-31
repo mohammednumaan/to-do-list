@@ -1,4 +1,4 @@
-import { newProjectArray } from "./createNewProject"
+import { newProjectArray } from "../createNewProject"
 
 function deleteTasks(e, project, div,todo){
     project.removeTask(todo.title)

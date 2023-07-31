@@ -1,5 +1,5 @@
-import { Todo } from "./createNewToDo"
-import { newProjectArray } from "./createNewProject"
+import { Todo } from "../createNewToDo"
+import { newProjectArray } from "../createNewProject"
 
 function editFunctionality(title,desc,date,prior,todo,project){        
     // updates the array

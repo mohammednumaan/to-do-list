@@ -1,13 +1,12 @@
-// import modules
 
-import { completeTasks } from "./completeTasks";
+// import modules
 import {Project, newProjectArray} from "./createNewProject";
 import { Todo } from "./createNewToDo";
-import { deleteTasks } from "./deleteTasks";
-import { editFunctionality } from "./editTasks";
 import { setLocalStorage } from "./localstorage";
-import { switchTabs } from "./switchTabs";
-
+import { switchTabs } from "./functionalities/switchTabs";
+import { editFunctionality } from "./functionalities/editTasks";
+import { deleteTasks } from "./functionalities/deleteTasks";
+import { completeTasks } from "./functionalities/completeTasks";
 
 // variable declarations
 
@@ -78,13 +77,15 @@ function DOM (){
         projectName.addEventListener('click' , () => {
             switchTabs(prj, task)
         })
+
+        
     };
     
 
     // project
 
     function displayProject(prjForm, title) {
-
+        
         const newProject = new Project(title.value)
         newProjectArray.push(newProject)
         console.log(newProjectArray)
@@ -122,6 +123,7 @@ function DOM (){
         newTaskButton.addEventListener('click', () => {
             todoForm(newProject, projectDiv)
         })
+
         setLocalStorage()
     }
 
@@ -202,6 +204,7 @@ function DOM (){
             todoForm.reset()
             todoForm.style.display ='none'
         })
+
         setLocalStorage()
     }
 
@@ -287,6 +290,7 @@ function DOM (){
                 completeTask.textContent = 'Completed!'
                 completeTask.style.backgroundColor = 'green'
             }
+
             setLocalStorage()
         })
     }
@@ -383,6 +387,7 @@ function DOM (){
             div.appendChild(complete)
 
             editFunctionality(editTitle, editDesc, editDate, editPriority, todo, project) 
+
             setLocalStorage()
         })
     }
