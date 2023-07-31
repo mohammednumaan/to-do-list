@@ -4,8 +4,8 @@ import { newProjectArray} from "./createNewProject";
 
 
 //setProjects(getLocalStorage())
-getLocalStorage()
-window.onload = getLocalStorage;
+
+window.onload = getLocalStorage();
 DOM()
 
 

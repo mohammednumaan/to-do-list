@@ -22,7 +22,8 @@ const newProjectButton = document.querySelector('.add-project')
 
 function DOM (){
 
-    displayProject(getLocalStorage())
+    //displayProject(getLocalStorage())
+    console.log(getLocalStorage())
 
     newProjectButton.addEventListener('click', () => {
         getLocalStorage()
