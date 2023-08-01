@@ -53,7 +53,7 @@ function projectForm(){
     sidebarContainer.appendChild(form)
 
     addProject.addEventListener('click', () => {
-        const title = titleName.value
+        let title = titleName.value
         displayProject(title)
         form.reset()
         form.style.display = 'none'
@@ -89,10 +89,17 @@ function projectDivs(name, prj, task) {
 
 // project
 
-function displayProject(prjTitle) {
+function displayProject(prj) {
     
-    const newProject = new Project(prjTitle)
-    newProjectArray.push(newProject)
+    let newProject;
+    if (newProjectArray.includes(prj)){
+        newProject = prj
+    }
+    else{
+        newProject = new Project(prj)
+        newProjectArray.push(newProject)
+    }
+    
     console.log(newProjectArray)
     
     const projectDiv = document.createElement('div')

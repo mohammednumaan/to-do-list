@@ -1,7 +1,9 @@
 import { DOM, displayProject } from "./DOM";
 import { getLocalStorage, loadTasks, setLocalStorage } from "./localstorage";
 import { newProjectArray, setProjects} from "./createNewProject"
-import { prjName } from "./localstorage";
+import { displayToDo } from "./DOM";
+import { displayLocalStorage } from "./displayLocalStorage";
+
 
 
 //setProjects(getLocalStorage())
@@ -12,6 +14,10 @@ window.addEventListener('load', () => {
 })
 
 console.log(getLocalStorage())
+
+
+displayLocalStorage()
+
 
 DOM()
 
