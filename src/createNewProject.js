@@ -1,6 +1,6 @@
 // creates project object
 
-import { getLocalStorage, setLocalStorage } from "./localstorage";
+import { getLocalStorage, setLocalStorage } from "./localstorage/localstorage";
 
 class Project{
     constructor(name){

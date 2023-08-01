@@ -1,6 +1,6 @@
-import { DOM, displayProject } from "./DOM";
-import { Project, newProjectArray } from "./createNewProject";
-import { Todo } from "./createNewToDo";
+import { DOM, displayProject } from "../DOM";
+import { Project, newProjectArray } from "../createNewProject";
+import { Todo } from "../createNewToDo";
 
 
 function setLocalStorage(){
