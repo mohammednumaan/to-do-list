@@ -1,8 +1,10 @@
 
-import { getLocalStorage, loadTasks, setLocalStorage } from "./localstorage";
-import { Todo } from "./createNewToDo";
-import { DOM, displayToDo } from "./DOM";
-import { displayLocalStorage } from "./displayLocalStorage";
+
+
+import { DOM} from "./DOM";
+import { displayLocalStorage } from "./displayStorage";
+import { getLocalStorage } from "./localStorage";
+
 
 
 

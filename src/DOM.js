@@ -7,7 +7,7 @@ import { switchTabs } from "./functionalities/switchTabs";
 import { editFunctionality } from "./functionalities/editTasks";
 import { deleteTasks } from "./functionalities/deleteTasks";
 import { completeTasks } from "./functionalities/completeTasks";
-import { setLocalStorage } from "./localstorage";
+import { setLocalStorage } from "./localStorage";
 
 // variable declarations
 
@@ -91,6 +91,7 @@ function projectDivs(name, prj, task) {
 // project
 
 function displayProject(prj) {
+
     let newProject;
     if (newProjectArray.includes(prj)){
         newProject = prj
@@ -99,8 +100,10 @@ function displayProject(prj) {
         const newProject = new Project(prj)
         newProjectArray.push(newProject)
     }
-    
-    console.log(newProjectArray)
+    newProject = names()
+
+    setLocalStorage()
+
     
     const projectDiv = document.createElement('div')
     projectDiv.classList.add('project-div')
@@ -134,7 +137,7 @@ function displayProject(prj) {
     })
 
 
-    setLocalStorage()
+
     
 }
 
@@ -211,6 +214,7 @@ function todoForm(project, prjDiv){
 
 
     addTaskButton.addEventListener('click', () => {
+        
         displayToDo(project, taskTitle, taskDesc, taskDate, taskPrior, prjDiv)
         todoForm.reset()
         todoForm.style.display ='none'
@@ -225,9 +229,20 @@ function todoForm(project, prjDiv){
 
 function displayToDo(project, title,desc,date, prior, div){
 
-    let newTodo = new Todo(title.value, desc.value, date.value, prior.value, project.name)
-    project.todos.push(newTodo)
-    console.log(newProjectArray)
+    let newTodo;
+    if (newProjectArray.includes(project)){
+        newTodo = new Todo(title.title, desc.desc, date.date, prior.priority, project.name)
+        project.todos.push(newTodo)
+        setLocalStorage()
+    
+    }
+    else{
+        newTodo = new Todo(title.value, desc.value, date.value, prior.value, project.name)
+        project.todos.push(newTodo)
+        console.log(newProjectArray)
+        setLocalStorage()
+    }
+    
     
     const taskDivs = document.createElement('div')
     taskDivs.classList.add('task-div')
@@ -265,7 +280,7 @@ function displayToDo(project, title,desc,date, prior, div){
     editTask.textContent = 'Edit This Task'
     editTask.classList.add('edit-task-button')
     taskDivs.appendChild(editTask)
-    div.appendChild(taskDivs)    
+    mainContainer.appendChild(taskDivs)    
 
     const completeTask = document.createElement('button')
     completeTask.setAttribute('type', 'button')
@@ -281,7 +296,7 @@ function displayToDo(project, title,desc,date, prior, div){
     // delete event
 
     deleteTask.addEventListener('click', (event) => {
-        deleteTasks(event, project, div,newTodo)
+        deleteTasks(event, project, div, newTodo)
         setLocalStorage()
 
     })
@@ -409,5 +424,5 @@ function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, to
 
 
 
-export {DOM, mainContainer, sidebarContainer, displayProject}
+export {DOM, mainContainer, sidebarContainer, displayProject, displayToDo}
 
