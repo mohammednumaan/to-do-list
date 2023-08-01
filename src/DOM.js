@@ -211,6 +211,8 @@ function todoForm(project, prjDiv){
 
 
     addTaskButton.addEventListener('click', () => {
+
+        
         displayToDo(project, taskTitle, taskDesc, taskDate, taskPrior, prjDiv)
         todoForm.reset()
         todoForm.style.display ='none'
@@ -224,10 +226,12 @@ function todoForm(project, prjDiv){
 // todo
 
 function displayToDo(project, title,desc,date, prior, div){
-
+    
     let newTodo = new Todo(title.value, desc.value, date.value, prior.value, project.name)
     project.todos.push(newTodo)
     console.log(newProjectArray)
+    setLocalStorage()
+   
     
     const taskDivs = document.createElement('div')
     taskDivs.classList.add('task-div')
@@ -273,7 +277,7 @@ function displayToDo(project, title,desc,date, prior, div){
     completeTask.textContent = 'Completed!'
     taskDivs.appendChild(completeTask)
 
-    setLocalStorage()
+
 
     
 
