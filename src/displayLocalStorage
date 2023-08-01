@@ -1,11 +1,13 @@
-import { displayProject } from "./DOM"
+import { displayProject, displayToDo } from "./DOM"
 import { newProjectArray } from "./createNewProject"
 
 
 function displayLocalStorage(){
     for (let i = 0; i < newProjectArray.length; i++){
-        console.log(newProjectArray[i].name)
+        //console.log(newProjectArray[i].name)
         displayProject(newProjectArray[i])
+        
+
    }
 }
 

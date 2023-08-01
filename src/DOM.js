@@ -216,7 +216,7 @@ function todoForm(project, prjDiv){
         todoForm.style.display ='none'
     })
 
-    setLocalStorage()
+    
 
 }
 
