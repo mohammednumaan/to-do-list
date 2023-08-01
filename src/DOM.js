@@ -2,11 +2,12 @@
 // import modules
 import {Project, newProjectArray} from "./createNewProject";
 import { Todo } from "./createNewToDo";
-import { getLocalStorage, setLocalStorage } from "./localstorage/localstorage";
+
 import { switchTabs } from "./functionalities/switchTabs";
 import { editFunctionality } from "./functionalities/editTasks";
 import { deleteTasks } from "./functionalities/deleteTasks";
 import { completeTasks } from "./functionalities/completeTasks";
+import { setLocalStorage } from "./localstorage";
 
 // variable declarations
 
@@ -90,14 +91,12 @@ function projectDivs(name, prj, task) {
 // project
 
 function displayProject(prj) {
-    
     let newProject;
     if (newProjectArray.includes(prj)){
-        newProject = new Project(prj.name)
-        console.log(newProject)
+        newProject = prj
     }
     else{
-        newProject = new Project(prj.name)
+        const newProject = new Project(prj)
         newProjectArray.push(newProject)
     }
     
@@ -213,12 +212,11 @@ function todoForm(project, prjDiv){
 
     addTaskButton.addEventListener('click', () => {
         displayToDo(project, taskTitle, taskDesc, taskDate, taskPrior, prjDiv)
-        console.log(project)
         todoForm.reset()
         todoForm.style.display ='none'
     })
 
-    
+    setLocalStorage()
 
 }
 
@@ -226,26 +224,10 @@ function todoForm(project, prjDiv){
 // todo
 
 function displayToDo(project, title,desc,date, prior, div){
-    
-    let newTodo;
 
-    if (newProjectArray.includes(project.todos.title)){
-        console.log(project.todos)
-        newTodo = new Todo (project.todos)
-        project.todos.push(newTodo)
-        setLocalStorage()
-    }
-    else{
-
-        newTodo = new Todo(title.value, desc.value, date.value, prior.value, project.name)
-        project.todos.push(newTodo)
-        console.log(newProjectArray)
-        setLocalStorage()
-
-    }
-
-    
-   
+    let newTodo = new Todo(title.value, desc.value, date.value, prior.value, project.name)
+    project.todos.push(newTodo)
+    console.log(newProjectArray)
     
     const taskDivs = document.createElement('div')
     taskDivs.classList.add('task-div')
@@ -292,6 +274,9 @@ function displayToDo(project, title,desc,date, prior, div){
     taskDivs.appendChild(completeTask)
 
     setLocalStorage()
+
+    
+
 
     // delete event
 
