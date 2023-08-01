@@ -1,13 +1,19 @@
 import { DOM, displayProject } from "./DOM";
 import { getLocalStorage, loadTasks, setLocalStorage } from "./localstorage";
-import { newProjectArray} from "./createNewProject";
+import { newProjectArray, setProjects} from "./createNewProject"
+import { prjName } from "./localstorage";
 
 
 //setProjects(getLocalStorage())
+
 getLocalStorage()
-displayProject(getLocalStorage())
-window.onload = getLocalStorage;
+window.addEventListener('load', () => {
+    getLocalStorage()
+})
+
+console.log(getLocalStorage())
 
 DOM()
+
 
 

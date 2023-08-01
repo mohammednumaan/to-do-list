@@ -23,7 +23,6 @@ const newProjectButton = document.querySelector('.add-project')
 function DOM (){
 
     newProjectButton.addEventListener('click', () => {
-        getLocalStorage()
         projectForm()
     })
 
@@ -54,7 +53,7 @@ function projectForm(){
     sidebarContainer.appendChild(form)
 
     addProject.addEventListener('click', () => {
-        let title = titleName.value
+        const title = titleName.value
         displayProject(title)
         form.reset()
         form.style.display = 'none'
@@ -90,9 +89,9 @@ function projectDivs(name, prj, task) {
 
 // project
 
-function displayProject(prj) {
+function displayProject(prjTitle) {
     
-    const newProject = new Project(prj)
+    const newProject = new Project(prjTitle)
     newProjectArray.push(newProject)
     console.log(newProjectArray)
     
