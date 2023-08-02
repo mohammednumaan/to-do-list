@@ -8,6 +8,7 @@ import { editFunctionality } from "./functionalities/editTasks";
 import { deleteTasks } from "./functionalities/deleteTasks";
 import { completeTasks } from "./functionalities/completeTasks";
 import { getLocalStorage, setLocalStorage } from "./localStorage";
+import { todoObject } from "./todo";
 
 // variable declarations
 
@@ -16,7 +17,9 @@ const mainContainer = document.querySelector('.main-screen-container')
 const container = document.querySelector('.container')
 const newProjectButton = document.querySelector('.add-project')
 
+const projectDiv = document.createElement('div')
 
+mainContainer.appendChild(projectDiv)
 
 
 // main dom function
@@ -66,7 +69,7 @@ function projectForm(){
 
 // project
 
-function projectDivs(name, prj, task) {
+function projectDivs(name, prj) {
     
     const projectNameDiv = document.createElement('div')
     const projectName = document.createElement('h2')
@@ -81,7 +84,7 @@ function projectDivs(name, prj, task) {
     sidebarContainer.appendChild(projectNameDiv)
 
     projectName.addEventListener('click' , () => {
-        switchTabs(prj, task)
+        switchTabs(prj, projectDiv)
     })
 
     
@@ -110,7 +113,6 @@ function displayProject(prj) {
     setLocalStorage()
 
     
-    const projectDiv = document.createElement('div')
     projectDiv.classList.add('project-div')
         
     const projectTitle = document.createElement('h2')
@@ -124,10 +126,11 @@ function displayProject(prj) {
     const newButtonDiv = document.createElement('div')
     newButtonDiv.classList.add('new-div')
         
-    mainContainer.appendChild(projectDiv)
+    
     newButtonDiv.appendChild(newTaskButton)
     projectDiv.appendChild(projectTitle)
     projectDiv.appendChild(newButtonDiv)
+
 
    
     projectTitle.innerText = newProject.name
@@ -135,7 +138,7 @@ function displayProject(prj) {
     projectDiv.id = projectTitle.id
     projectDiv.style.display = 'none'
     
-    projectDivs(newProject, projectDiv, projectTitle)
+    projectDivs(newProject, projectTitle)
 
     newTaskButton.addEventListener('click', () => {
         if (newProject.name == prj.name){
@@ -147,6 +150,7 @@ function displayProject(prj) {
             todoForm(newProject, projectDiv)
         }
     })
+    
 
 
 
@@ -155,7 +159,7 @@ function displayProject(prj) {
 
 // todo
 
-function todoForm(projectName, prjDiv){
+function todoForm(prjName, div){
 
     const todoForm = document.createElement('form')
     todoForm.classList.add('todo-form')
@@ -227,7 +231,8 @@ function todoForm(projectName, prjDiv){
 
     addTaskButton.addEventListener('click', () => {
         
-        displayToDo(projectName, taskTitle, taskDesc, taskDate, taskPrior, prjDiv)
+        let todoList = todoObject(taskTitle.value, taskDesc.value, taskDate.value, taskPrior.value, prjName)
+        displayToDo(todoList, prjName, projectDiv)
         todoForm.reset()
         todoForm.style.display ='none'
     })
@@ -239,28 +244,9 @@ function todoForm(projectName, prjDiv){
 
 // todo
 
-function displayToDo(projectN, title,desc,date, prior, div){
-
-    let newTodo;
-    if (projectN.todos.includes(projectN.todos.title)){
-        newTodo = new Todo(title, desc, date, prior, projectN.name)
-        //projectN.todos.push(newTodo)
-        setLocalStorage()
-    }
-    else{
-        newTodo = new Todo(title.value, desc.value, date.value, prior.value, projectN.name)
-        projectN.todos.push(newTodo)
-        setLocalStorage()
-
-    }
-
-    localStorage.setItem("project", JSON.stringify(newProjectArray));
-    
+function displayToDo(todo, prjN, div){
 
 
-    console.log(projectN)
-    
-    
     const taskDivs = document.createElement('div')
     taskDivs.classList.add('task-div')
 
@@ -270,34 +256,34 @@ function displayToDo(projectN, title,desc,date, prior, div){
     taskUL.appendChild(taskLI)
 
     const tasks = document.createElement('h2')
-    tasks.textContent = newTodo.title
+    tasks.textContent = todo.title
     taskLI.appendChild(tasks)
 
     const taskDescr = document.createElement('p')
-    taskDescr.textContent = `${newTodo.desc}`
+    taskDescr.textContent = todo.desc
     taskDivs.appendChild(taskDescr)
 
     const taskDates = document.createElement('p')
-    taskDates.textContent = `${newTodo.date}`
+    taskDates.textContent = `${todo.date}`
     taskDivs.appendChild(taskDates)
 
     const taskPriority = document.createElement('p')
-    taskPriority.textContent = `${newTodo.priority}`
+    taskPriority.textContent = `${todo.priority}`
     taskDivs.appendChild(taskPriority)
 
     const deleteTask = document.createElement('button')
     deleteTask.setAttribute('type', 'button')
     deleteTask.classList.add('delete-button')
-    deleteTask.textContent = 'Delete projectN Task'
+    deleteTask.textContent = 'Delete prj Task'
     taskDivs.appendChild(deleteTask)
 
     const editTask = document.createElement('button')
     editTask.setAttribute('type', 'button')
     editTask.classList.add('edit-button')
-    editTask.textContent = 'Edit projectN Task'
+    editTask.textContent = 'Edit prj Task'
     editTask.classList.add('edit-task-button')
     taskDivs.appendChild(editTask)
-    mainContainer.appendChild(taskDivs)    
+    div.appendChild(taskDivs)    
 
     const completeTask = document.createElement('button')
     completeTask.setAttribute('type', 'button')
@@ -314,7 +300,7 @@ function displayToDo(projectN, title,desc,date, prior, div){
     // delete event
 
     deleteTask.addEventListener('click', (event) => {
-        projectN.todos = projectN.todos.filter((todo) => todo.title !== newTodo.title);
+        prjN.todos = prjN.todos.filter((todos) => todos.title !== todo.title);
         div.removeChild(event.target.parentElement)
         localStorage.removeItem('project')
         setLocalStorage()
@@ -327,7 +313,8 @@ function displayToDo(projectN, title,desc,date, prior, div){
     // edit event
 
     editTask.addEventListener('click', () => {
-        editForm(taskDivs, tasks,taskDescr,taskDates,taskPriority,taskLI,taskUL,deleteTask,editTask,completeTask,newTodo,projectN)
+        editForm(todo, prjN, taskLI, taskUL, deleteTask, editTask, completeTask, taskDivs, tasks,taskDescr,taskDates,taskPriority)
+        console.log(prjN)
     })
 
     // complete event
@@ -349,9 +336,10 @@ function displayToDo(projectN, title,desc,date, prior, div){
 }
 
 
-// edit
+// edit    div, title, desc, date, prior, li, ul, del, edit, complete, todo, project
+//         taskDivs,tasks,taskDescr,taskDates,taskPriority,taskLI,taskUL,deleteTask,editTask,completeTask,todo, prj
 
-function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, todo, project){
+function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,date,prior){
     
     div.innerHTML = ''
 
@@ -366,7 +354,7 @@ function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, to
     let editTitle = document.createElement('input')
     editTitle.setAttribute('type', 'text')
     editTitle.setAttribute('id', 'editLabel')
-    editTitle.value = title.textContent
+    editTitle.value = todo.title
     editForm.appendChild(editTitle)
 
 
@@ -375,7 +363,7 @@ function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, to
     editDescLabel.setAttribute('for', 'editDesc')
     editForm.appendChild(editDescLabel)
     let editDesc = document.createElement('textarea')
-    editDesc.textContent = desc.textContent
+    editDesc.textContent = todo.desc
     editForm.appendChild(editDesc)
 
     
@@ -385,7 +373,7 @@ function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, to
     editForm.appendChild(editDateLabel)
     let editDate = document.createElement('input')
     editDate.setAttribute('type', 'date')
-    editDate.value = date.textContent
+    editDate.value = todo.date
     editForm.appendChild(editDate)
 
 
@@ -410,7 +398,7 @@ function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, to
     highPrior.textContent = 'High'
     editPriority.appendChild(highPrior)
 
-    editPriority.value = prior.textContent
+    editPriority.value = todo.priority
     editForm.appendChild(editPriority)
 
     let editButton = document.createElement('button')
@@ -421,8 +409,8 @@ function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, to
     editButton.addEventListener('click', () => {
         editForm.style.display = 'none'
 
-        title.textContent = editTitle.value
-        li.appendChild(title)
+        li.children[0].textContent = editTitle.value
+        li.appendChild(li.children[0])
         ul.appendChild(li)
         div.appendChild(ul)
         
@@ -439,6 +427,7 @@ function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, to
         div.appendChild(edit)
         div.appendChild(complete)
 
+        
         editFunctionality(editTitle.value, editDesc.value, editDate.value, editPriority.value, todo, project) 
 
         setLocalStorage()
@@ -447,5 +436,5 @@ function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, to
 
 
 
-export {DOM, mainContainer, sidebarContainer, displayProject, displayToDo}
+export {DOM, mainContainer, sidebarContainer, displayProject, displayToDo, projectDiv}
 

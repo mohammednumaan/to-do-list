@@ -15,7 +15,8 @@ import { getLocalStorage, setLocalStorage } from "./localStorage";
 
 getLocalStorage()
 
-window.onload = displayLocalStorage()
+window.onload = getLocalStorage();
+displayLocalStorage()
 
 DOM()
 

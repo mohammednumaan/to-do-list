@@ -3,8 +3,9 @@ import { newProjectArray } from "../createNewProject"
 
 function editFunctionality(title,desc,date,prior,todo,project){        
     // updates the array
-    
-    let updatedTodo = new Todo(title, desc, date, prior,todo.project)
+    console.log(todo)
+    console.log(project)
+    let updatedTodo = new Todo(title, desc, date, prior, todo.project)
     let currentTodo = todo
     let index = project.todos.indexOf(currentTodo)
     project.todos.splice(index, 1, updatedTodo)
