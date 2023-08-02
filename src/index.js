@@ -2,8 +2,9 @@
 
 
 import { DOM} from "./DOM";
+import { newProjectArray } from "./createNewProject";
 import { displayLocalStorage } from "./displayStorage";
-import { getLocalStorage } from "./localStorage";
+import { getLocalStorage, setLocalStorage } from "./localStorage";
 
 
 
@@ -13,12 +14,9 @@ import { getLocalStorage } from "./localStorage";
 //setProjects(getLocalStorage())
 
 getLocalStorage()
-window.addEventListener('load', () => {
-    getLocalStorage()
-})
 
-console.log(getLocalStorage())
-displayLocalStorage()
+window.onload = displayLocalStorage()
+
 DOM()
 
 

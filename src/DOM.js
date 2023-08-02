@@ -7,7 +7,7 @@ import { switchTabs } from "./functionalities/switchTabs";
 import { editFunctionality } from "./functionalities/editTasks";
 import { deleteTasks } from "./functionalities/deleteTasks";
 import { completeTasks } from "./functionalities/completeTasks";
-import { setLocalStorage } from "./localStorage";
+import { getLocalStorage, setLocalStorage } from "./localStorage";
 
 // variable declarations
 
@@ -104,7 +104,7 @@ function displayProject(prj) {
         newProject = new Project(prj.value)
         newProjectArray.push(newProject)
     }
-    console.log(newProjectArray)
+
 
 
     setLocalStorage()
@@ -138,7 +138,14 @@ function displayProject(prj) {
     projectDivs(newProject, projectDiv, projectTitle)
 
     newTaskButton.addEventListener('click', () => {
-        todoForm(newProject, projectDiv)
+        if (newProject.name == prj.name){
+            console.log('if again')
+            todoForm(prj, projectDiv)
+        }
+        else{
+            console.log('else again')
+            todoForm(newProject, projectDiv)
+        }
     })
 
 
@@ -148,7 +155,7 @@ function displayProject(prj) {
 
 // todo
 
-function todoForm(project, prjDiv){
+function todoForm(projectName, prjDiv){
 
     const todoForm = document.createElement('form')
     todoForm.classList.add('todo-form')
@@ -220,33 +227,38 @@ function todoForm(project, prjDiv){
 
     addTaskButton.addEventListener('click', () => {
         
-        displayToDo(project, taskTitle, taskDesc, taskDate, taskPrior, prjDiv)
+        displayToDo(projectName, taskTitle, taskDesc, taskDate, taskPrior, prjDiv)
         todoForm.reset()
         todoForm.style.display ='none'
     })
 
-    setLocalStorage()
+
 
 }
 
 
 // todo
 
-function displayToDo(project, title,desc,date, prior, div){
+function displayToDo(projectN, title,desc,date, prior, div){
 
     let newTodo;
-    if (newProjectArray.includes(project)){
-        newTodo = new Todo(title.title, desc.desc, date.date, prior.priority, project.name)
-        project.todos.push(newTodo)
+    if (projectN.todos.length !== 0){
+        newTodo = new Todo(title.value, desc.value, date.value, prior.value, projectN.name)
+        projectN.todos.push(newTodo)
         setLocalStorage()
-    
     }
     else{
-        newTodo = new Todo(title.value, desc.value, date.value, prior.value, project.name)
-        project.todos.push(newTodo)
-        console.log(newProjectArray)
+        newTodo = new Todo(title.value, desc.value, date.value, prior.value, projectN.name)
+        projectN.todos.push(newTodo)
         setLocalStorage()
+
     }
+
+    localStorage.setItem("project", JSON.stringify(newProjectArray));
+    
+
+
+    console.log(projectN)
     
     
     const taskDivs = document.createElement('div')
@@ -285,15 +297,16 @@ function displayToDo(project, title,desc,date, prior, div){
     editTask.textContent = 'Edit This Task'
     editTask.classList.add('edit-task-button')
     taskDivs.appendChild(editTask)
-    mainContainer.appendChild(taskDivs)    
+    div.appendChild(taskDivs)    
 
     const completeTask = document.createElement('button')
     completeTask.setAttribute('type', 'button')
     completeTask.classList.add('complete-button')
     completeTask.textContent = 'Completed!'
     taskDivs.appendChild(completeTask)
-
     setLocalStorage()
+
+
 
     
 
@@ -301,15 +314,16 @@ function displayToDo(project, title,desc,date, prior, div){
     // delete event
 
     deleteTask.addEventListener('click', (event) => {
-        deleteTasks(event, project, div, newTodo)
-        setLocalStorage()
+        deleteTasks(event, projectN, div, newTodo)
+
+
 
     })
 
     // edit event
 
     editTask.addEventListener('click', () => {
-        editForm(taskDivs, tasks,taskDescr,taskDates,taskPriority,taskLI,taskUL,deleteTask,editTask,completeTask,newTodo,project)
+        editForm(taskDivs, tasks,taskDescr,taskDates,taskPriority,taskLI,taskUL,deleteTask,editTask,completeTask,newTodo,projectN)
     })
 
     // complete event

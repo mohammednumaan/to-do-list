@@ -1,6 +1,6 @@
-function deleteTasks(e, project, div,todo){
+function deleteTasks(target, project, div,todo){
     project.removeTask(todo.title)
-    div.removeChild(e.target.parentElement)
+    div.removeChild(target.target.parentElement)
 
 }
 
