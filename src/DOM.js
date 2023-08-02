@@ -242,9 +242,9 @@ function todoForm(projectName, prjDiv){
 function displayToDo(projectN, title,desc,date, prior, div){
 
     let newTodo;
-    if (projectN.todos.length !== 0){
-        newTodo = new Todo(title.value, desc.value, date.value, prior.value, projectN.name)
-        projectN.todos.push(newTodo)
+    if (projectN.todos.includes(projectN.todos.title)){
+        newTodo = new Todo(title, desc, date, prior, projectN.name)
+        //projectN.todos.push(newTodo)
         setLocalStorage()
     }
     else{
@@ -288,16 +288,16 @@ function displayToDo(projectN, title,desc,date, prior, div){
     const deleteTask = document.createElement('button')
     deleteTask.setAttribute('type', 'button')
     deleteTask.classList.add('delete-button')
-    deleteTask.textContent = 'Delete This Task'
+    deleteTask.textContent = 'Delete projectN Task'
     taskDivs.appendChild(deleteTask)
 
     const editTask = document.createElement('button')
     editTask.setAttribute('type', 'button')
     editTask.classList.add('edit-button')
-    editTask.textContent = 'Edit This Task'
+    editTask.textContent = 'Edit projectN Task'
     editTask.classList.add('edit-task-button')
     taskDivs.appendChild(editTask)
-    div.appendChild(taskDivs)    
+    mainContainer.appendChild(taskDivs)    
 
     const completeTask = document.createElement('button')
     completeTask.setAttribute('type', 'button')
@@ -314,7 +314,11 @@ function displayToDo(projectN, title,desc,date, prior, div){
     // delete event
 
     deleteTask.addEventListener('click', (event) => {
-        deleteTasks(event, projectN, div, newTodo)
+        projectN.todos = projectN.todos.filter((todo) => todo.title !== newTodo.title);
+        div.removeChild(event.target.parentElement)
+        localStorage.removeItem('project')
+        setLocalStorage()
+        console.log(newProjectArray)
 
 
 
@@ -435,7 +439,7 @@ function editForm(div, title, desc, date, prior, li, ul, del, edit, complete, to
         div.appendChild(edit)
         div.appendChild(complete)
 
-        editFunctionality(editTitle, editDesc, editDate, editPriority, todo, project) 
+        editFunctionality(editTitle.value, editDesc.value, editDate.value, editPriority.value, todo, project) 
 
         setLocalStorage()
     })

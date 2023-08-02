@@ -6,6 +6,7 @@ import { Todo } from "./createNewToDo";
 function setLocalStorage(){
     
     localStorage.setItem('project', JSON.stringify(newProjectArray))
+    localStorage.setItem('todo', JSON.stringify(newProjectArray))
   
     
 
@@ -19,6 +20,7 @@ function getLocalStorage(){
     return newProjectArray
 
 }
+
 
 
 
