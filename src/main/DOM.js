@@ -241,6 +241,7 @@ function displayToDo(todo, prjN){
 
     const taskDivs = document.createElement('div')
     taskDivs.classList.add('task-div')
+    taskDivs.id = newProjectArray.indexOf(prjN)
     
 
     const taskUL = document.createElement('ul')
@@ -282,26 +283,32 @@ function displayToDo(todo, prjN){
     completeTask.classList.add('complete-button')
     completeTask.textContent = 'Completed!'
     taskDivs.appendChild(completeTask)
+
     
+    // appends each new tasks to specific project div
 
-
+    let child = Array.from(mainContainer.children)
+    for (let i = 0; i < child.length; i++){
+        if (child[i].id == taskDivs.id){
+            child[i].appendChild(taskDivs)
+        }
+    }
 
 
     // delete event
 
     deleteTask.addEventListener('click', () => {
-            prjN.todos = prjN.todos.filter((todos) => todos.title !== todo.title);
-
-            for (let i = 0; i < child.length; i++){
-                if (child[i].id == taskDivs.id){
-                    child[i].removeChild(taskDivs)
-                }
-       
+        prjN.todos = prjN.todos.filter((todos) => todos.title !== todo.title);
+        for (let i = 0; i < child.length; i++){
+            if (child[i].id == taskDivs.id){
+                child[i].removeChild(taskDivs)
             }
-            localStorage.removeItem('project')
-            setLocalStorage()
+        }
+        localStorage.removeItem('project')
+        setLocalStorage()
         console.log(newProjectArray)
     })
+    
 
     // edit event
 
@@ -325,19 +332,8 @@ function displayToDo(todo, prjN){
         }
 
         setLocalStorage()
-
     })
 
-    let child = Array.from(mainContainer.children)
-    for (let i = 0; i < child.length; i++){
-        taskDivs.id = Number(child.indexOf(child[i]))
-        child[i].id = taskDivs.id
-        if (child[i].id == taskDivs.id){
-            
-            child[i].appendChild(taskDivs)
-        }
-
-    }
     
 }
 
