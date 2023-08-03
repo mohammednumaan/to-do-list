@@ -1,4 +1,4 @@
-// creates todo object
+// creates todo object constructor
 
 class Todo{
     constructor(title, desc, date, priority,project){

@@ -1,16 +1,16 @@
-import { DOM, displayProject } from "./DOM";
-import { Project, newProjectArray } from "./createNewProject";
-import { Todo } from "./createNewToDo";
+// import
 
+import { Project, newProjectArray } from "../main/createNewProject";
+
+// set local storage
 
 function setLocalStorage(){
-    
+
     localStorage.setItem('project', JSON.stringify(newProjectArray))
-
-  
-    
-
 }
+
+
+// get local storage
 
 function getLocalStorage(){
 
@@ -21,7 +21,6 @@ function getLocalStorage(){
 
 }
 
-
-
+// export
 
 export {setLocalStorage, getLocalStorage}

@@ -1,3 +1,5 @@
+// switch tabs/projects 
+
 function switchTabs(divs,title){
     divs = Array.from(document.querySelectorAll('.project-div'))
     for (let i = 0; i < divs.length; i++){
@@ -10,5 +12,7 @@ function switchTabs(divs,title){
         }
     }
 }
+
+// export
 
 export {switchTabs}

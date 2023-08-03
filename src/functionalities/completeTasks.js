@@ -1,3 +1,5 @@
+// complete tasks logic
+
 function completeTasks(task, desc, date, prior){;
     task.classList.toggle('line')
     desc.classList.toggle('line')
@@ -5,5 +7,7 @@ function completeTasks(task, desc, date, prior){;
     prior.classList.toggle('line')
 
 }
+
+// export
 
 export {completeTasks}

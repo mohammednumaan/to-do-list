@@ -1,36 +1,35 @@
 
 // import modules
+
 import {Project, newProjectArray} from "./createNewProject";
-import { Todo } from "./createNewToDo";
+import { switchTabs } from "../functionalities/switchTabs";
+import { editFunctionality } from "../functionalities/editTasks";
+import { completeTasks } from "../functionalities/completeTasks";
+import { setLocalStorage } from "../localstorage/localStorage";
+import { todoObject } from "../functionalities/generateTodo";
+import { append } from "../functionalities/append";
 
-import { switchTabs } from "./functionalities/switchTabs";
-import { editFunctionality } from "./functionalities/editTasks";
-import { deleteTasks } from "./functionalities/deleteTasks";
-import { completeTasks } from "./functionalities/completeTasks";
-import { getLocalStorage, setLocalStorage } from "./localStorage";
-import { todoObject } from "./todo";
-
-// variable declarations
+// getting elements
 
 const sidebarContainer = document.querySelector('.sidebar-container')
 const mainContainer = document.querySelector('.main-screen-container')
-const container = document.querySelector('.container')
 const newProjectButton = document.querySelector('.add-project')
-
-const projectDiv = document.createElement('div')
-
-mainContainer.appendChild(projectDiv)
 
 
 // main dom function
 
 function DOM (){
 
+    // new project event
+
     newProjectButton.addEventListener('click', () => {
         projectForm()
     })
 
 };
+
+
+// project form
 
 function projectForm(){
         
@@ -56,6 +55,9 @@ function projectForm(){
     form.appendChild(addProject)
     sidebarContainer.appendChild(form)
 
+
+    // add project event
+
     addProject.addEventListener('click', () => {
         let title = titleName
         displayProject(title)
@@ -63,13 +65,12 @@ function projectForm(){
         form.style.display = 'none'
         
     })
-    
-
 }
 
-// project
 
-function projectDivs(name, prj) {
+// sidebar display of all the projects
+
+function projectDivs(name, prj, div) {
     
     const projectNameDiv = document.createElement('div')
     const projectName = document.createElement('h2')
@@ -83,38 +84,37 @@ function projectDivs(name, prj) {
     projectNameDiv.appendChild(projectName)
     sidebarContainer.appendChild(projectNameDiv)
 
-    projectName.addEventListener('click' , () => {
-        switchTabs(prj, projectDiv)
-    })
+    // switch projects/tabs events
 
-    
+    projectName.addEventListener('click' , () => {
+        switchTabs(prj, div)
+    })    
 };
 
 
-// project
+// display new projects
 
 function displayProject(prj) {
+
+
+    // generate new projects
+
 
     let newProject;
     if (newProjectArray.includes(prj)){
         console.log('if')
-        newProject = new Project(prj.name)
-        
-        
+        newProject = new Project(prj.name) 
     }
     else{
         console.log('else')
         newProject = new Project(prj.value)
         newProjectArray.push(newProject)
     }
-
-
-
     setLocalStorage()
 
-    
+    const projectDiv = document.createElement('div')
     projectDiv.classList.add('project-div')
-        
+    
     const projectTitle = document.createElement('h2')
     projectTitle.classList.add('project-name')
     projectTitle.id = newProjectArray.indexOf(prj)
@@ -126,40 +126,36 @@ function displayProject(prj) {
     const newButtonDiv = document.createElement('div')
     newButtonDiv.classList.add('new-div')
         
-    
     newButtonDiv.appendChild(newTaskButton)
     projectDiv.appendChild(projectTitle)
     projectDiv.appendChild(newButtonDiv)
+    mainContainer.appendChild(projectDiv)
 
-
-   
     projectTitle.innerText = newProject.name
     newTaskButton.textContent = 'ADD TASK +'
     projectDiv.id = projectTitle.id
     projectDiv.style.display = 'none'
     
-    projectDivs(newProject, projectTitle)
+    projectDivs(newProject, projectTitle, projectDiv)
+
+    // add new task event
 
     newTaskButton.addEventListener('click', () => {
         if (newProject.name == prj.name){
             console.log('if again')
-            todoForm(prj, projectDiv)
+            todoForm(prj)
         }
         else{
             console.log('else again')
-            todoForm(newProject, projectDiv)
+            todoForm(newProject)
         }
     })
-    
-
-
-
-    
 }
 
-// todo
 
-function todoForm(prjName, div){
+// todo form
+
+function todoForm(prjName){
 
     const todoForm = document.createElement('form')
     todoForm.classList.add('todo-form')
@@ -225,30 +221,27 @@ function todoForm(prjName, div){
     todoForm.appendChild(taskPriorLabel)
     todoForm.appendChild(taskPrior)
     todoForm.appendChild(addTaskButton)
-
     mainContainer.appendChild(todoForm)
 
+    // add task event
 
     addTaskButton.addEventListener('click', () => {
-        
         let todoList = todoObject(taskTitle.value, taskDesc.value, taskDate.value, taskPrior.value, prjName)
-        displayToDo(todoList, prjName, projectDiv)
+        displayToDo(todoList, prjName)
         todoForm.reset()
         todoForm.style.display ='none'
     })
 
-
-
 }
 
 
-// todo
+// display newly generated todos
 
-function displayToDo(todo, prjN, div){
-
+function displayToDo(todo, prjN){
 
     const taskDivs = document.createElement('div')
     taskDivs.classList.add('task-div')
+    
 
     const taskUL = document.createElement('ul')
     taskDivs.appendChild(taskUL)
@@ -283,31 +276,31 @@ function displayToDo(todo, prjN, div){
     editTask.textContent = 'Edit prj Task'
     editTask.classList.add('edit-task-button')
     taskDivs.appendChild(editTask)
-    div.appendChild(taskDivs)    
 
     const completeTask = document.createElement('button')
     completeTask.setAttribute('type', 'button')
     completeTask.classList.add('complete-button')
     completeTask.textContent = 'Completed!'
     taskDivs.appendChild(completeTask)
-    setLocalStorage()
-
-
-
     
+
+
 
 
     // delete event
 
-    deleteTask.addEventListener('click', (event) => {
-        prjN.todos = prjN.todos.filter((todos) => todos.title !== todo.title);
-        div.removeChild(event.target.parentElement)
-        localStorage.removeItem('project')
-        setLocalStorage()
+    deleteTask.addEventListener('click', () => {
+            prjN.todos = prjN.todos.filter((todos) => todos.title !== todo.title);
+
+            for (let i = 0; i < child.length; i++){
+                if (child[i].id == taskDivs.id){
+                    child[i].removeChild(taskDivs)
+                }
+       
+            }
+            localStorage.removeItem('project')
+            setLocalStorage()
         console.log(newProjectArray)
-
-
-
     })
 
     // edit event
@@ -316,6 +309,7 @@ function displayToDo(todo, prjN, div){
         editForm(todo, prjN, taskLI, taskUL, deleteTask, editTask, completeTask, taskDivs, tasks,taskDescr,taskDates,taskPriority)
         console.log(prjN)
     })
+
 
     // complete event
     
@@ -333,11 +327,22 @@ function displayToDo(todo, prjN, div){
         setLocalStorage()
 
     })
+
+    let child = Array.from(mainContainer.children)
+    for (let i = 0; i < child.length; i++){
+        taskDivs.id = Number(child.indexOf(child[i]))
+        child[i].id = taskDivs.id
+        if (child[i].id == taskDivs.id){
+            
+            child[i].appendChild(taskDivs)
+        }
+
+    }
+    
 }
 
 
-// edit    div, title, desc, date, prior, li, ul, del, edit, complete, todo, project
-//         taskDivs,tasks,taskDescr,taskDates,taskPriority,taskLI,taskUL,deleteTask,editTask,completeTask,todo, prj
+// edit form
 
 function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,date,prior){
     
@@ -406,7 +411,11 @@ function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,da
     editButton.type = 'button'
     editForm.appendChild(editButton)
 
+
+    // edit task event
+
     editButton.addEventListener('click', () => {
+
         editForm.style.display = 'none'
 
         li.children[0].textContent = editTitle.value
@@ -435,6 +444,7 @@ function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,da
 }
 
 
+// export
 
-export {DOM, mainContainer, sidebarContainer, displayProject, displayToDo, projectDiv}
+export {DOM, displayProject, displayToDo, mainContainer, sidebarContainer}
 

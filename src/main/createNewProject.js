@@ -1,6 +1,8 @@
-// creates project object
+// import
 
-import { getLocalStorage, setLocalStorage } from "./localStorage";
+import { setLocalStorage } from "../localstorage/localStorage";
+
+// project object constructor
 
 class Project{
     constructor(name){
@@ -27,8 +29,6 @@ class Project{
 
 let defaultProject = new Project('DEFAULT')
 let newProjectArray = [];
-
-
 
 
 // export

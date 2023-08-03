@@ -1,24 +1,20 @@
+// import
+
+import { DOM} from "./main/DOM";
+import { newProjectArray } from "./main/createNewProject";
+import { displayLocalStorage } from "./localstorage/displayStorage";
+import { getLocalStorage, setLocalStorage } from "./localstorage/localStorage";
 
 
+// initialize
 
-import { DOM} from "./DOM";
-import { newProjectArray } from "./createNewProject";
-import { displayLocalStorage } from "./displayStorage";
-import { getLocalStorage, setLocalStorage } from "./localStorage";
-
-
-
-
-
-
-//setProjects(getLocalStorage())
 
 getLocalStorage()
-
 window.onload = getLocalStorage();
-displayLocalStorage()
 
+displayLocalStorage()
 DOM()
+
 
 
 
