@@ -1,6 +1,7 @@
 // import
 
 import { setLocalStorage } from "../localstorage/localStorage";
+import { Todo } from "./createNewToDo";
 
 // project object constructor
 
@@ -25,10 +26,17 @@ class Project{
 
 }
 
-// stores all the projects and creates default project
+// stores all te projects in an array
 
-let defaultProject = new Project('DEFAULT')
 let newProjectArray = [];
+
+// default inbox/project
+
+let defaultProject = new Project('INBOX')
+let defaultTodo = new Todo('Welcome!', 'Hello There!', '01-01-2003','Low','INBOX')
+defaultProject.todos.push(defaultTodo)
+newProjectArray.push(defaultProject)
+setLocalStorage()
 
 
 // export

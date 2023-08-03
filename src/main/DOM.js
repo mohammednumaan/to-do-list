@@ -7,7 +7,7 @@ import { editFunctionality } from "../functionalities/editTasks";
 import { completeTasks } from "../functionalities/completeTasks";
 import { setLocalStorage } from "../localstorage/localStorage";
 import { todoObject } from "../functionalities/generateTodo";
-import { append } from "../functionalities/append";
+
 
 // getting elements
 
@@ -268,13 +268,13 @@ function displayToDo(todo, prjN){
     const deleteTask = document.createElement('button')
     deleteTask.setAttribute('type', 'button')
     deleteTask.classList.add('delete-button')
-    deleteTask.textContent = 'Delete prj Task'
+    deleteTask.textContent = 'Delete Task'
     taskDivs.appendChild(deleteTask)
 
     const editTask = document.createElement('button')
     editTask.setAttribute('type', 'button')
     editTask.classList.add('edit-button')
-    editTask.textContent = 'Edit prj Task'
+    editTask.textContent = 'Edit Task'
     editTask.classList.add('edit-task-button')
     taskDivs.appendChild(editTask)
 

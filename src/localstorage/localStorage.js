@@ -1,6 +1,6 @@
 // import
 
-import { Project, newProjectArray } from "../main/createNewProject";
+import { newProjectArray } from "../main/createNewProject";
 
 // set local storage
 

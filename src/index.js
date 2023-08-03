@@ -1,13 +1,11 @@
 // import
 
-import { DOM} from "./main/DOM";
-import { newProjectArray } from "./main/createNewProject";
+import { DOM } from "./main/DOM";
 import { displayLocalStorage } from "./localstorage/displayStorage";
-import { getLocalStorage, setLocalStorage } from "./localstorage/localStorage";
+import { getLocalStorage } from "./localstorage/localStorage";
 
 
 // initialize
-
 
 getLocalStorage()
 window.onload = getLocalStorage();
