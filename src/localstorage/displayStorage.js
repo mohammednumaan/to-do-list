@@ -9,11 +9,9 @@ import { newProjectArray } from "../main/createNewProject"
 function displayLocalStorage(){
     let list = newProjectArray;
     for (let i = 0; i < list.length; i++){
-        console.log(list[i])
         displayProject(list[i])
 
         for (let j = 0; j < list[i].todos.length; j++){
-            console.log(list[i].todos[j])
             displayToDo(list[i].todos[j], list[i])
         }  
    }
