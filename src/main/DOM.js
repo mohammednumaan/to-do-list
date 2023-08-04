@@ -117,7 +117,25 @@ function displayProject(prj) {
     
     const projectTitle = document.createElement('h2')
     projectTitle.classList.add('project-name')
-    projectTitle.id = newProjectArray.indexOf(prj)
+
+    // assigns id based on the project given
+    
+    function test(){
+        projectTitle.id;
+        if (newProject.name == prj.name){
+            projectTitle.id = newProjectArray.indexOf(prj)
+            
+        }
+        else{
+            projectTitle.id = newProjectArray.indexOf(newProject)
+           
+            
+        }
+        return projectTitle.id
+
+    }
+
+    console.log(projectTitle.id)
     
     const newTaskButton = document.createElement('button')
     newTaskButton.classList.add('button-add')
@@ -133,7 +151,7 @@ function displayProject(prj) {
 
     projectTitle.innerText = newProject.name
     newTaskButton.textContent = 'ADD TASK +'
-    projectDiv.id = projectTitle.id
+    projectDiv.id = test()
     projectDiv.style.display = 'none'
     
     projectDivs(newProject, projectTitle, projectDiv)
@@ -147,6 +165,7 @@ function displayProject(prj) {
         }
         else{
             console.log('else again')
+            console.log(newProject)
             todoForm(newProject)
         }
     })
