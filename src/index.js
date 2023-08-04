@@ -6,11 +6,12 @@ import "./style.css"
 
 
 // initialize
-DOM()
+
 getLocalStorage()
 window.onload = getLocalStorage();
 
 displayLocalStorage()
+DOM()
 
 
 

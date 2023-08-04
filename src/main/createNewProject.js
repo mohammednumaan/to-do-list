@@ -33,6 +33,10 @@ let newProjectArray = [];
 // default inbox/project
 
 let defaultProject = new Project('INBOX')
+let defaultTodo = new Todo('Welcome!', 'Hello There!', '01-01-2023', 'Low', 'INBOX')
+defaultProject.todos.push(defaultTodo)
+newProjectArray.push(defaultProject)
+setLocalStorage()
 
 
 // export
