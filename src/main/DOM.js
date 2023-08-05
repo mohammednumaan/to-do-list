@@ -44,12 +44,13 @@ function projectForm(){
     titleLabel.setAttribute('for', 'new-project')
 
     const titleName = document.createElement('input')
+    titleName.required = true;
     titleName.setAttribute('type', 'text')
     titleName.setAttribute('id', 'new-project')
 
 
     const addProject = document.createElement('button')
-    addProject.setAttribute('type', 'button')
+    addProject.setAttribute('type', 'submit')
 
     addProject.textContent = 'CREATE PROJECT'
     titleLabel.textContent = 'TITLE'
@@ -62,7 +63,7 @@ function projectForm(){
 
     // add project event
 
-    addProject.addEventListener('click', () => {
+    form.addEventListener('submit', () => {
         
         let title = titleName
         displayProject(title)
@@ -189,12 +190,15 @@ function todoForm(prjName){
     let taskTitle = document.createElement('input')
     taskTitle.type = 'text'
     taskTitle.id = 'new-task'
+    taskTitle.required = true;
     const taskTitleLabel = document.createElement('label')
     taskTitleLabel.for = 'new-task'
     taskTitleLabel.textContent = 'Title Of Your Task'
 
     let taskDesc = document.createElement('textarea')
     taskDesc.id = 'new-desc'
+    taskDesc.required = true;
+
     const taskDescLabel = document.createElement('label')
     taskDescLabel.for = 'new-desc'
     taskDescLabel.textContent = 'Description Of Your Task'
@@ -202,6 +206,8 @@ function todoForm(prjName){
     let taskDate = document.createElement('input')
     taskDate.type = 'date'
     taskDate.id = 'task-date'
+    taskDate.required = true;
+
     const taskDateLabel = document.createElement('label')
     taskDateLabel.textContent = 'DUE-DATE Of Your Task'
     taskDateLabel.for = 'task-date'
@@ -210,6 +216,7 @@ function todoForm(prjName){
     taskPrior.id= 'priority'
     const taskPriorLabel = document.createElement('label')
     taskPriorLabel.for = 'priority'
+    taskPrior.required = true;
     taskPriorLabel.textContent = 'Priority Of Your Task'
 
     const low = document.createElement('option')
