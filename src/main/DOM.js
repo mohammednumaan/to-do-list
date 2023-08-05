@@ -7,6 +7,8 @@ import { editFunctionality } from "../functionalities/editTasks";
 import { completeTasks } from "../functionalities/completeTasks";
 import { setLocalStorage } from "../localstorage/localStorage";
 import { todoObject } from "../functionalities/generateTodo";
+import { deleteTasks } from "../functionalities/deleteTasks";
+import { getId } from "../functionalities/id";
 
 
 
@@ -123,20 +125,7 @@ function displayProject(prj) {
 
     // assigns id based on the project given
     
-    function test(){
-        projectTitle.id;
-        if (newProject.name == prj.name){
-            projectTitle.id = newProjectArray.indexOf(prj)
-            
-        }
-        else{
-            projectTitle.id = newProjectArray.indexOf(newProject)
-           
-            
-        }
-        return projectTitle.id
-
-    }
+    let newId = getId(prj, newProject, projectTitle)
 
     console.log(projectTitle.id)
     
@@ -154,7 +143,7 @@ function displayProject(prj) {
 
     projectTitle.innerText = newProject.name
     newTaskButton.textContent = 'ADD TASK +'
-    projectDiv.id = test()
+    projectDiv.id = newId;
     projectDiv.style.display = 'none'
     
     projectDivs(newProject, projectTitle, projectDiv)
@@ -322,21 +311,9 @@ function displayToDo(todo, prjN){
     // delete event
 
     deleteTask.addEventListener('click', () => {
-        for(let i =0; i < prjN.todos.length; i++){
-            prjN.todos[i].id = prjN.todos.indexOf(prjN.todos[i])
-            console.log(prjN.todos[i].id)
-        }
-        
-
-        prjN.todos = prjN.todos.filter((todos) => todos.id !== todo.id);
-        for (let i = 0; i < child.length; i++){
-            if (child[i].id == taskDivs.id){
-                child[i].removeChild(taskDivs)
-            }
-        }
+        deleteTasks(prjN, todo, taskDivs)
         localStorage.removeItem('project')
         setLocalStorage()
-        console.log(newProjectArray)
     })
     
 

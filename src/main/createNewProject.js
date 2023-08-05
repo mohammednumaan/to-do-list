@@ -38,10 +38,8 @@ function defaultProject(){
     defaultProject.todos.push(defaultTodo)
     newProjectArray.unshift(defaultProject)
     setLocalStorage()
-    return newProjectArray
+    return newProjectArray;
 }
-
-
 
 
 // export

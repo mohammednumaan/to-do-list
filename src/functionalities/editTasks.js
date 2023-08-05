@@ -1,8 +1,12 @@
+// import
+
 import { Todo } from "../main/createNewToDo"
 import { newProjectArray } from "../main/createNewProject"
 
+// edit logic
+
 function editFunctionality(title,desc,date,prior,todo,project){        
-    // updates the array
+
     console.log(todo)
     console.log(project)
     let updatedTodo = new Todo(title, desc, date, prior, todo.project)
@@ -13,5 +17,7 @@ function editFunctionality(title,desc,date,prior,todo,project){
 
 
 }
+
+// export
 
 export {editFunctionality}

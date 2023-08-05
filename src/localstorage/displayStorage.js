@@ -2,7 +2,6 @@
 
 import { displayProject,  displayToDo } from "../main/DOM"
 import { newProjectArray } from "../main/createNewProject"
-import { getLocalStorage } from "./localStorage";
 
 
 // display existing projects and todos
