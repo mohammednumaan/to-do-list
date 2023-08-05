@@ -9,6 +9,7 @@ import { setLocalStorage } from "../localstorage/localStorage";
 import { todoObject } from "../functionalities/generateTodo";
 
 
+
 // getting elements
 
 const sidebarContainer = document.querySelector('.sidebar-container')
@@ -59,10 +60,12 @@ function projectForm(){
     // add project event
 
     addProject.addEventListener('click', () => {
+        
         let title = titleName
         displayProject(title)
         form.reset()
         form.style.display = 'none'
+        
         
     })
 }
@@ -169,6 +172,8 @@ function displayProject(prj) {
             todoForm(newProject)
         }
     })
+
+    
 }
 
 
@@ -317,7 +322,13 @@ function displayToDo(todo, prjN){
     // delete event
 
     deleteTask.addEventListener('click', () => {
-        prjN.todos = prjN.todos.filter((todos) => todos.title !== todo.title);
+        for(let i =0; i < prjN.todos.length; i++){
+            prjN.todos[i].id = prjN.todos.indexOf(prjN.todos[i])
+            console.log(prjN.todos[i].id)
+        }
+        
+
+        prjN.todos = prjN.todos.filter((todos) => todos.id !== todo.id);
         for (let i = 0; i < child.length; i++){
             if (child[i].id == taskDivs.id){
                 child[i].removeChild(taskDivs)
@@ -374,7 +385,7 @@ function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,da
     let editTitle = document.createElement('input')
     editTitle.setAttribute('type', 'text')
     editTitle.setAttribute('id', 'editLabel')
-    editTitle.value = todo.title
+    editTitle.value = title.textContent
     editForm.appendChild(editTitle)
 
 
@@ -383,7 +394,7 @@ function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,da
     editDescLabel.setAttribute('for', 'editDesc')
     editForm.appendChild(editDescLabel)
     let editDesc = document.createElement('textarea')
-    editDesc.textContent = todo.desc
+    editDesc.textContent = desc.textContent
     editForm.appendChild(editDesc)
 
     
@@ -393,7 +404,7 @@ function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,da
     editForm.appendChild(editDateLabel)
     let editDate = document.createElement('input')
     editDate.setAttribute('type', 'date')
-    editDate.value = todo.date
+    editDate.value = date.textContent
     editForm.appendChild(editDate)
 
 
@@ -418,7 +429,7 @@ function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,da
     highPrior.textContent = 'High'
     editPriority.appendChild(highPrior)
 
-    editPriority.value = todo.priority
+    editPriority.value = prior.textContent
     editForm.appendChild(editPriority)
 
     let editButton = document.createElement('button')

@@ -7,6 +7,8 @@ class Todo{
         this.date = date
         this.priority = priority
         this.project = project
+        this.id = null;
+
     }
 }
 

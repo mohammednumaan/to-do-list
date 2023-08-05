@@ -2,11 +2,13 @@
 
 import { displayProject,  displayToDo } from "../main/DOM"
 import { newProjectArray } from "../main/createNewProject"
+import { getLocalStorage } from "./localStorage";
 
 
 // display existing projects and todos
 
 function displayLocalStorage(){
+    console.log(newProjectArray)
     let list = newProjectArray;
     for (let i = 0; i < list.length; i++){
         displayProject(list[i])

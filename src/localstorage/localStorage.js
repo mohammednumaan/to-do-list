@@ -1,6 +1,6 @@
 // import
 
-import { newProjectArray } from "../main/createNewProject";
+import { defaultProject, newProjectArray } from "../main/createNewProject";
 
 // set local storage
 
@@ -14,7 +14,8 @@ function setLocalStorage(){
 
 function getLocalStorage(){
 
-    let localData = JSON.parse(localStorage.getItem('project')) || []
+    
+    let localData = JSON.parse(localStorage.getItem('project')) || defaultProject()
     console.log(localData)
     newProjectArray = localData;
     return newProjectArray

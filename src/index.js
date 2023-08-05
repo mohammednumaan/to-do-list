@@ -9,7 +9,6 @@ import "./style.css"
 
 getLocalStorage()
 window.onload = getLocalStorage();
-
 displayLocalStorage()
 DOM()
 
