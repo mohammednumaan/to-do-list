@@ -7,7 +7,7 @@ import { newProjectArray } from "../main/createNewProject"
 // display existing projects and todos
 
 function displayLocalStorage(){
-    console.log(newProjectArray)
+
     let list = newProjectArray;
     for (let i = 0; i < list.length; i++){
         displayProject(list[i])

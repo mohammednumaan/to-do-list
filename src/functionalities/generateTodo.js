@@ -12,17 +12,19 @@ function todoObject(title, desc, date, prior, name){
     for (let i = 0; i < newProjectArray.length; i++){
     
         if ('title' in name.todos){
-            console.log('not-push')
-            newTodo = new Todo(title, desc,date, prior, name.name)
+
+            newTodo = new Todo(title, desc,date, prior, name.name,name.todos)
+            newTodo.generateTodoId(name)
             setLocalStorage()
-            console.log(name)
+
         }
         else{
-            console.log('push')
+
             newTodo = new Todo(title, desc,date, prior, name.name)
             name.todos.push(newTodo)
+            newTodo.generateTodoId(name)
             setLocalStorage()
-            console.log(name)
+
         }
         return newTodo; 
     }

@@ -70,6 +70,31 @@ hr{
     text-decoration: underline;
 }
 
+.project-name-div{
+    display: flex;
+}
+
+
+#del-project{
+
+    margin-left: 10px;
+    margin-top: 5px;
+    width: 80px;
+    height: 20px;
+
+    border: 3px solid #272932;
+    color: white;
+    background-color: #017F71;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: 10px;
+}
+
+#del-project:hover{
+
+    background-color: #db3a34;
+}
+
 /* PROJECT FORM */
 
 .project-form{
