@@ -321,8 +321,9 @@ hr{
 
 .line {
 
-    background-color: lightsalmon;
     text-decoration: line-through;
+    background-color: lightseagreen;
+    border-radius: 5px;
 }
 
 

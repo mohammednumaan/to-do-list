@@ -14,6 +14,7 @@ function displayLocalStorage(){
 
         for (let j = 0; j < list[i].todos.length; j++){
             displayToDo(list[i].todos[j], list[i])
+            
         }  
    }
 }

@@ -12,8 +12,8 @@ class Todo{
     }
 
     generateTodoId(project){
-        for(let i =0; i < project.todos.length; i++){
-            project.todos[i].id = project.todos.indexOf(project.todos[i])
+        for(let j =0; j < project.todos.length; j++){
+            project.todos[j].id = project.todos.indexOf(project.todos[j])
         }
     }
 }

@@ -12,7 +12,6 @@ function todoObject(title, desc, date, prior, name){
     for (let i = 0; i < newProjectArray.length; i++){
     
         if ('title' in name.todos){
-
             newTodo = new Todo(title, desc,date, prior, name.name,name.todos)
             newTodo.generateTodoId(name)
             setLocalStorage()

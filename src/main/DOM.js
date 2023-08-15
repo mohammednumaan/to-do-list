@@ -3,13 +3,14 @@
 
 import {Project, newProjectArray} from "./createNewProject";
 import { switchTabs } from "../functionalities/switchTabs";
-import { editFunctionality } from "../functionalities/editTasks";
-import { completeTasks } from "../functionalities/completeTasks";
+import { editFunctionality, returnTodo, updateTodo } from "../functionalities/editTasks";
+import { completeTasks, checkComplete } from "../functionalities/completeTasks";
 import { setLocalStorage } from "../localstorage/localStorage";
 import { todoObject } from "../functionalities/generateTodo";
 import { removeTasks } from "../functionalities/deleteTasks";
 import { getId } from "../functionalities/generateId";
-import { appendDiv } from "../functionalities/appendDiv";
+import { appendDiv, removeDiv } from "../functionalities/appendAndRemove";
+
 
 
 
@@ -258,6 +259,7 @@ function todoForm(prjName){
     addTaskButton.addEventListener('click', () => {
         let todoList = todoObject(taskTitle.value, taskDesc.value, taskDate.value, taskPrior.value, prjName)
         displayToDo(todoList, prjName)
+    
         todoForm.reset()
         todoForm.style.display ='none'
     })
@@ -268,11 +270,10 @@ function todoForm(prjName){
 // display newly generated todos
 
 function displayToDo(todo, project){
-
+   
     const taskDivs = document.createElement('div')
     taskDivs.classList.add('task-div')
-    taskDivs.id = newProjectArray.indexOf(project)
-    
+    taskDivs.id =  newProjectArray.indexOf(project)
 
     const taskUL = document.createElement('ul')
     taskDivs.appendChild(taskUL)
@@ -312,8 +313,9 @@ function displayToDo(todo, project){
     completeTask.setAttribute('type', 'button')
     completeTask.classList.add('complete-button')
     completeTask.textContent = 'Completed!'
-    taskDivs.appendChild(completeTask)
 
+    taskDivs.appendChild(completeTask)
+    completeTasks(tasks, taskDescr, taskDates, taskPriority,completeTask, todo.completed)  
     
     // appends each new tasks to specific project div
 
@@ -330,37 +332,36 @@ function displayToDo(todo, project){
     
 
     // edit event
+
     editTask.addEventListener('click', () => {
-        editForm(todo, project, taskLI, taskUL, deleteTask, editTask, completeTask, taskDivs, tasks, taskDescr, taskDates, taskPriority)
+        editForm(todo, project, taskLI, taskDivs, tasks, taskDescr, taskDates, taskPriority, taskUL,deleteTask,editTask,completeTask)
     })
 
-
+       
     // complete event
-    
-    completeTask.addEventListener('click' , () => {
-        completeTasks(tasks, taskDescr, taskDates, taskPriority)
-        
-        if(tasks.classList.contains('line')){
-            
-            completeTask.textContent = 'Not Completed!'
-            completeTask.style.backgroundColor = '#db3a34'
 
+
+    completeTask.addEventListener('click' , () => {
+
+        if (todo.completed === false){
+            completeTasks(tasks, taskDescr, taskDates, taskPriority,completeTask, todo.completed)     
+            setLocalStorage()
+            todo.completed = true;
         }
         else{
-
-            completeTask.textContent = 'Completed!'
-            completeTask.style.backgroundColor = 'green'
-
+            todo.completed = false;
         }
+        completeTasks(tasks, taskDescr, taskDates, taskPriority, completeTask, todo.completed)     
         setLocalStorage()
-    })
+        
 
-    
+    })  
+ 
 }
 
 // edit form
 
-function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,date,prior){
+function editForm(todo, project, li, div, title,desc,date,prior ,ul, del, edit, complete){
     
     div.innerHTML = ''
 
@@ -432,6 +433,7 @@ function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,da
 
     editButton.addEventListener('click', () => {
 
+        
         editForm.style.display = 'none'
 
         li.children[0].textContent = editTitle.value
@@ -452,10 +454,25 @@ function editForm(todo, project, li, ul, del, edit, complete, div, title,desc,da
         div.appendChild(edit)
         div.appendChild(complete)
 
-        
+          
+    
         editFunctionality(editTitle.value, editDesc.value, editDate.value, editPriority.value, todo, project) 
+        let updatedTodo =  editFunctionality(editTitle.value, editDesc.value, editDate.value, editPriority.value, todo, project) 
+        todo = updatedTodo
+        complete.addEventListener('click' , () => {
 
-        setLocalStorage()
+            if (todo.completed === false){
+                completeTasks(li, desc, date, prior,complete, todo.completed)     
+                setLocalStorage()
+                todo.completed = true;
+            }
+            else{
+                todo.completed = false;
+            } 
+            setLocalStorage()
+        
+
+        });
     })
 }
 

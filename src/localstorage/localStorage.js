@@ -15,7 +15,12 @@ function setLocalStorage(){
 function getLocalStorage(){
 
     
-    let localData = JSON.parse(localStorage.getItem('project')) || defaultProject()
+    let localData = JSON.parse(localStorage.getItem('project')) || []
+
+    if (localData === [] ){
+        defaultProject()
+    }
+
     newProjectArray = localData;
     return newProjectArray
 
